@@ -3,6 +3,7 @@ package me.sat7.dynamicshop.commands;
 import me.sat7.dynamicshop.commands.shop.Command;
 import me.sat7.dynamicshop.utilities.UserUtil;
 import org.bukkit.Material;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -103,7 +104,9 @@ public final class Help
             {
                 try
                 {
-                    ItemStack tempItem = new ItemStack(Material.getMaterial(args[3]));
+                    Material material = Material.getMaterial(args[3]);
+                    if(material == null) return;
+                    ItemStack tempItem = new ItemStack(material);
                     int idx = ShopUtil.findItemFromShop(args[1], tempItem);
 
                     if (idx != -1)
@@ -124,7 +127,9 @@ public final class Help
             {
                 try
                 {
-                    ItemStack tempItem = new ItemStack(Material.getMaterial(args[3].substring(args[3].indexOf("/") + 1)));
+                    Material material = Material.getMaterial(args[3].substring(args[3].indexOf("/") + 1));
+                    if(material == null) return;
+                    ItemStack tempItem = new ItemStack(material);
                     int idx = ShopUtil.findItemFromShop(args[1], tempItem);
 
                     if (idx != -1)
@@ -221,6 +226,194 @@ public final class Help
         else if (helpcode.equals("background"))
         {
             CMDManager.background.SendHelpMessage(player);
+        }
+        else
+        {
+            CMDManager.commandHelp.SendHelpMessage(player);
+        }
+    }
+
+    public static void showHelp(String helpcode, CommandSender sender, String[] args) {
+        // 控制台不需要权限和用户数据检查
+
+        switch (helpcode) {
+            case "main":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "main"));
+                sender.sendMessage(" - shop: " + t(sender, "HELP.SHOP"));
+                sender.sendMessage(" - qsell: " + t(sender, "HELP.QSELL"));
+                sender.sendMessage(" - cmdHelp: " + t(sender, "HELP.CMD"));
+                sender.sendMessage("§e - createshop: " + t(sender, "HELP.CREATE_SHOP"));
+                sender.sendMessage("§e - deleteshop: " + t(sender, "HELP.DELETE_SHOP"));
+                sender.sendMessage("§e - reload: " + t(sender, "HELP.RELOAD"));
+                sender.sendMessage("");
+                break;
+            case "shop":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "shop"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop [<shopname>]");
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE")
+                        + ": /ds shop <shopname> <enable | addhand | add | edit | editall | setToRecAll | sellbuy | permission | maxpage | flag | currency | position | shophours | fluctuation | stockStabilizing | command | account | log | resetTradingVolume | background>");
+
+                sender.sendMessage("§e - enable: " + t(sender, "HELP.SHOP_ENABLE"));
+                sender.sendMessage("§e - add: " + t(sender, "HELP.SHOP_ADD_ITEM"));
+                sender.sendMessage("§e - edit: " + t(sender, "HELP.SHOP_EDIT"));
+                sender.sendMessage("§e - editall: " + t(sender, "HELP.EDIT_ALL"));
+                sender.sendMessage("§e - setToRecAll: " + t(sender, "HELP.SET_TO_REC_ALL"));
+                sender.sendMessage("");
+                break;
+            case "open_shop":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "open_shop"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds openshop <shopname> [player]");
+                sender.sendMessage("");
+                break;
+            case "enable":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "enable"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop <shopname> enable <true | false>");
+                sender.sendMessage("");
+                break;
+            case "add":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "add"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop <shopname> add <material> <buy_price> <sell_price> <median_stock> <stock> [display_name]");
+                sender.sendMessage("");
+                break;
+            case "edit":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "edit"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop <shopname> edit <index/material> <value> <buy_price | sell_price | median_stock | stock | display_name | enchant | flags | potiontype | potionlevel | potionextended | potion_duration | hide_flags | leather_color | spawn_egg | custom_data>");
+                sender.sendMessage("");
+                break;
+            case "edit_all":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "edit_all"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop <shopname> editall <value> <buy_price | sell_price | median_stock | stock>");
+                sender.sendMessage("");
+                break;
+            case "set_to_rec_all":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "set_to_rec_all"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop <shopname> setToRecAll");
+                sender.sendMessage("");
+                break;
+            case "cmd_help":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "cmdHelp"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds cmdHelp <on | off>");
+                sender.sendMessage(" - " + t(sender, "HELP.CMD"));
+                sender.sendMessage("");
+                break;
+            case "iteminfo":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "iteminfo"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds iteminfo");
+                sender.sendMessage("");
+                break;
+            case "create_shop":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "createshop"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds createshop <shopname>");
+                sender.sendMessage("");
+                break;
+            case "delete_shop":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "deleteshop"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds deleteshop <shopname>");
+                sender.sendMessage("");
+                break;
+            case "merge_shop":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "mergeshop"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds mergeshop <shop1> <shop2>");
+                sender.sendMessage("");
+                break;
+            case "rename_shop":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "renameshop"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds renameshop <old_name> <new_name>");
+                sender.sendMessage("");
+                break;
+            case "copy_shop":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "copyshop"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds copyshop <source_shop> <target_shop>");
+                sender.sendMessage("");
+                break;
+            case "permission":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "permission"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop <shopname> permission <permission>");
+                sender.sendMessage("");
+                break;
+            case "max_page":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "maxpage"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop <shopname> maxpage <page_number>");
+                sender.sendMessage("");
+                break;
+            case "currency":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "currency"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop <shopname> currency <Vault | Exp | PlayerPoint | JobPoint>");
+                sender.sendMessage("");
+                break;
+            case "flag":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "flag"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop <shopname> flag <flag_name> <true | false>");
+                sender.sendMessage("");
+                break;
+            case "position":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "position"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop <shopname> position");
+                sender.sendMessage("");
+                break;
+            case "shophours":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "shophours"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop <shopname> shophours <open_hour> <close_hour>");
+                sender.sendMessage("");
+                break;
+            case "fluctuation":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "fluctuation"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop <shopname> fluctuation <value>");
+                sender.sendMessage("");
+                break;
+            case "stock_stabilizing":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "stockStabilizing"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop <shopname> stockStabilizing <interval_ticks> <recover_percentage>");
+                sender.sendMessage("");
+                break;
+            case "command":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "command"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop <shopname> command <sell | buy> add <index> <command>");
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop <shopname> command <sell | buy> delete <index>");
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop <shopname> command active <true | false>");
+                sender.sendMessage("");
+                Command.PrintCurrentState(sender, Shop.GetShopName(args), true, true);
+                break;
+            case "account":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "account"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop <shopname> account <info | deposit | withdraw | give | set> [value]");
+                sender.sendMessage("");
+                break;
+            case "set_tax":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "settax"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds settax <tax_percentage>");
+                sender.sendMessage("");
+                break;
+            case "set_default_shop":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "setdefaultshop"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds setdefaultshop <shopname>");
+                sender.sendMessage("");
+                break;
+            case "delete_old_user":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "deleteolduser"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds deleteolduser <days>");
+                sender.sendMessage("");
+                break;
+            case "sellbuy":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "sellbuy"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop <shopname> sellbuy <true | false>");
+                sender.sendMessage("");
+                break;
+            case "log":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "log"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop <shopname> log <player_name>");
+                sender.sendMessage("");
+                break;
+            case "resetTradingVolume":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "resetTradingVolume"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop <shopname> resetTradingVolume");
+                sender.sendMessage("");
+                break;
+            case "background":
+                sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "HELP.TITLE").replace("{command}", "background"));
+                sender.sendMessage(" - " + t(sender, "HELP.USAGE") + ": /ds shop <shopname> background <material>");
+                sender.sendMessage("");
+                break;
         }
     }
 }

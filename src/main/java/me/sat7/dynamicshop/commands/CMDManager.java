@@ -123,6 +123,8 @@ public class CMDManager
         if(CMDHashMap.containsKey(key))
         {
             CMDHashMap.get(key).RunCMD(args, sender);
+        } else {
+            Help.showHelp("main", sender, args);
         }
     }
 }
