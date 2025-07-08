@@ -574,11 +574,14 @@ public final class TabCompleteUtil
                 } else if (args[0].equalsIgnoreCase("deleteOldUser"))
                 {
                     Help.showHelp("delete_old_user", (Player) sender, args);
+                } else {
+                    Help.showHelp("main", (Player) sender, args);
                 }
 
                 return autoCompleteList;
             }
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             return null;
         }
