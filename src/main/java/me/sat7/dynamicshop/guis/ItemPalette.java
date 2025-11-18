@@ -392,10 +392,6 @@ public final class ItemPalette extends InGameUI
             return;
 
         DynaShopAPI.openItemPalette(player, uiSubType, shopName, shopSlotIndex, targetPage, this.search);
-
-        if(uiType == UI_TYPE.Shop) {
-            lastPage.put(player.getUniqueId(), currentPage);
-        }
     }
 
     private void AddAll(boolean applyRecommend)
@@ -447,7 +443,6 @@ public final class ItemPalette extends InGameUI
                 ShopUtil.addItemToShop(shopName, targetSlotIdx, temp);
             }
         }
-        DynaShopAPI.openShopGui(player, shopName, lastPage.getOrDefault(player.getUniqueId(), 1));
     }
 
     private void OnClickSearch(boolean isLeft, boolean isRight)
