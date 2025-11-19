@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public final class UserUtil
 {
-    public static CustomConfig ccUser = new CustomConfig(); // 가급적 save 호출 피할 것. onDisable 에서 처리함.
+    public static CustomConfig ccUser = new CustomConfig(); // 가급적 save 호출 피할 것. onDisable 에서 처리함. (盡量避免呼叫save。在onDisable中處理)
     public static final HashMap<UUID, String> userTempData = new HashMap<>();
     public static final HashMap<UUID, String> userInteractItem = new HashMap<>();
 
@@ -36,7 +36,7 @@ public final class UserUtil
                 ConfigurationSection cs = ccUser.get().getConfigurationSection(s);
                 if (cs != null)
                 {
-                    // 구버전에 있던 데이터를 삭제함.
+                    // 구버전에 있던 데이터를 삭제함. (刪除舊版本中的資料)
                     cs.set("tmpString", null);
                     cs.set("interactItem", null);
                 }
@@ -104,9 +104,9 @@ public final class UserUtil
 
     // ----------------------------------------------------------------------
 
-    // 구매 & 판매 수량 제한
-    // - 상점의 데이터는 [상점+idx] 로 관리.
-    // - 유저의 데이터는 [상점+hash] 로 관리.
+    // 구매 & 판매 수량 제한 (購買 & 販賣 數量限制)
+    // - 상점의 데이터는 [상점+idx] 로 관리. (- 商店的資料以 [商店+idx] 方式管理)
+    // - 유저의 데이터는 [상점+hash] 로 관리. (- 使用者的資料以 [商店+hash] 方式管理)
     public static final HashMap<String, HashMap<String, HashMap<UUID, Integer>>> tradingVolume = new HashMap<>();
 
     public static void LoadTradeLimitDataFromYML()

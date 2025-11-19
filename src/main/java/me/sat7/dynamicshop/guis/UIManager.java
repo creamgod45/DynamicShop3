@@ -35,7 +35,7 @@ public class UIManager implements Listener
     @EventHandler
     public void OnClose(InventoryCloseEvent e)
     {
-        // 기존에 인벤토리가 열려있는 상태에서 다른것을 열면 close가 먼저 불림.
+        // 기존에 인벤토리가 열려있는 상태에서 다른것을 열면 close가 먼저 불림. (如果已經開啟一個介面，再開啟另一個介面時，會先觸發close事件。)
         Player player = (Player) e.getPlayer();
         currentUI.remove(player);
     }
@@ -52,7 +52,7 @@ public class UIManager implements Listener
             @Override
             public void run()
             {
-                player.openInventory(inventory); // 가장 먼저 불려야함. (버킷에서 새 인벤이 열릴때 기존의 것이 닫힘처리됨)
+                player.openInventory(inventory); // 가장 먼저 불려야함. (버킷에서 새 인벤이 열릴때 기존의 것이 닫힘처리됨) (必須最先被呼叫。(因為在Bukkit中，當新的介面開啟時，舊的介面會被處理為關閉))
 
                 currentUI.put(player, inGameUI);
             }

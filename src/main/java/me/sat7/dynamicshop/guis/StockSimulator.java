@@ -113,12 +113,12 @@ public class StockSimulator extends InGameUI
     {
         Player player = (Player) e.getWhoClicked();
 
-        // 닫기 버튼
+        // 닫기 버튼 (關閉按鈕)
         if (e.getSlot() == CLOSE)
         {
             DynaShopAPI.openShopSettingGui(player, shopName);
         }
-        // 샘플 아이템 변경
+        // 샘플 아이템 변경 (變更範例物品)
         else if (e.getSlot() == ITEM_1 || e.getSlot() == ITEM_2 || e.getSlot() == ITEM_3 || e.getSlot() == ITEM_4 || e.getSlot() == ITEM_5)
         {
             if (e.isLeftClick())
@@ -129,7 +129,7 @@ public class StockSimulator extends InGameUI
             sampleStartIdx = Clamp(sampleStartIdx, 0, shopItemCount - 5);
             CreateSampleDatas(sampleStartIdx);
         }
-        // 무작위 재고
+        // 무작위 재고 (隨機庫存)
         else if (e.getSlot() == FLUC || e.getSlot() == FLUC_INTERVAL || e.getSlot() == FLUC_STRENGTH)
         {
             if (fluc)
@@ -167,7 +167,7 @@ public class StockSimulator extends InGameUI
 
             UpdateBottomButtons();
         }
-        // 스톡 안정화
+        // 스톡 안정화 (庫存穩定)
         else if (e.getSlot() == STABLE || e.getSlot() == STABLE_INTERVAL || e.getSlot() == STABLE_STRENGTH)
         {
             if (stable)
@@ -205,7 +205,7 @@ public class StockSimulator extends InGameUI
 
             UpdateBottomButtons();
         }
-        // 시뮬레이션 실행
+        // 시뮬레이션 실행 (執行模擬)
         else if (e.getSlot() == RUN)
         {
             if (e.isLeftClick())
@@ -235,14 +235,14 @@ public class StockSimulator extends InGameUI
                     continue;
                 }
 
-                int i = Integer.parseInt(item); // options에 대해 적용하지 않기 위해.
+                int i = Integer.parseInt(item); // options에 대해 적용하지 않기 위해. (為了不套用到options)
 
-                if (!data.get().contains(item + ".value")) continue; // 장식용은 스킵
+                if (!data.get().contains(item + ".value")) continue; // 장식용은 스킵 (跳過裝飾品)
 
                 int stock = data.get().getInt(item + ".stock");
-                if (stock < 1) continue; // 무한재고에 대해서는 스킵
+                if (stock < 1) continue; // 무한재고에 대해서는 스킵 (跳過無限庫存)
                 int oldMedian = data.get().getInt(item + ".median");
-                if (oldMedian < 1) continue; // 고정가 상품에 대해서는 스킵
+                if (oldMedian < 1) continue; // 고정가 상품에 대해서는 스킵 (跳過固定價格商品)
 
                 SimulData simulData = new SimulData();
                 simulData.mat = data.get().getString(item + ".mat");
@@ -286,7 +286,7 @@ public class StockSimulator extends InGameUI
         for (int i = 47; i < 54; i++)
             inventory.setItem(i, null);
 
-        // 랜덤
+        // 랜덤 (隨機)
         if (fluc)
         {
             ArrayList<String> fluctuationLore = new ArrayList<>(Arrays.asList(
@@ -318,7 +318,7 @@ public class StockSimulator extends InGameUI
             inventory.setItem(FLUC, flucToggleBtn);
         }
 
-        // 안정화
+        // 안정화 (穩定)
         if (stable)
         {
             ArrayList<String> stableLore = new ArrayList<>(Arrays.asList(
@@ -359,12 +359,12 @@ public class StockSimulator extends InGameUI
         }
 
         final int[] time = new int[]{
-                48, 48 * 2, 48 * 3, //48 = 20분(마크 1일)
-                144 * 2, 144 * 4, 144 * 6, // 144 = 1시간
+                48, 48 * 2, 48 * 3, //48 = 20분(마크 1일) (48 = 20分鐘(Minecraft 1天))
+                144 * 2, 144 * 4, 144 * 6, // 144 = 1시간 (144 = 1小時)
                 144 * 8, 144 * 10, 144 * 12,
                 144 * 14, 144 * 16, 144 * 18,
                 144 * 20, 144 * 22, 144 * 24,
-                3456 * 2, 3456 * 3, 3456 * 4, // 3456 = 1일
+                3456 * 2, 3456 * 3, 3456 * 4, // 3456 = 1일 (3456 = 1天)
                 3456 * 5, 3456 * 6, 3456 * 7};
 
         Random generator = new Random();

@@ -116,7 +116,7 @@ public final class ItemTrade extends InGameUI
         {
             if (e.getSlot() == CLOSE)
             {
-                // 표지판을 클릭해서 거래화면에 진입한 경우에는 상점UI로 돌아가는 대신 인벤토리를 닫음
+                // 표지판을 클릭해서 거래화면에 진입한 경우에는 상점UI로 돌아가는 대신 인벤토리를 닫음 (點擊招牌進入交易畫面時，直接關閉介面而不是返回商店UI)
                 if (UserUtil.userTempData.get(player.getUniqueId()).equalsIgnoreCase("sign"))
                 {
                     UserUtil.userTempData.put(player.getUniqueId(), "");
@@ -193,17 +193,17 @@ public final class ItemTrade extends InGameUI
                     ItemStack tempIS = new ItemStack(e.getCurrentItem().getType(), e.getCurrentItem().getAmount());
                     tempIS.setItemMeta((ItemMeta) data.get().get(tradeIdx + ".itemStack"));
 
-                    // 무한재고&고정가격
+                    // 무한재고&고정가격 (無限庫存&固定價格)
                     boolean infiniteStock = data.get().getInt(tradeIdx + ".stock") <= 0;
 
-                    // 배달비 계산
+                    // 배달비 (運費) 계산 (運費計算)
                     ConfigurationSection optionS = data.get().getConfigurationSection("Options");
                     if (optionS.contains("world") && optionS.contains("pos1") && optionS.contains("pos2") && optionS.contains("flag.deliverycharge"))
                     {
                         deliveryCharge = ShopUtil.CalcShipping(shopName, player);
                         if (deliveryCharge == -1)
                         {
-                            player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "MESSAGE.DELIVERY_CHARGE_NA")); // 다른 월드로 배달 불가능
+                            player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "MESSAGE.DELIVERY_CHARGE_NA")); // 다른 월드로 배달 불가능 (無法配送到其他世界)
                             return;
                         }
                     }
@@ -302,7 +302,7 @@ public final class ItemTrade extends InGameUI
 
     private void CreateTradeButtons(boolean sell)
     {
-        // 플레이어당 거래 제한
+        // 플레이어당 거래 제한 (每位玩家的交易限制)
         String tradeLimitString = "";
         int tradeIdxInt = Integer.parseInt(tradeIdx);
         int tradeLimitLeft = UserUtil.GetTradingLimitLeft(player, shopName, tradeIdxInt, HashUtil.GetItemHash(new ItemStack(Material.getMaterial(material))), sell);
@@ -413,7 +413,7 @@ public final class ItemTrade extends InGameUI
 
             if (!sell)
             {
-                if (stock != -1 && stock <= amount) // stock은 1이거나 그보다 작을 수 없음. 단 -1은 무한재고를 의미함.
+                if (stock != -1 && stock <= amount) // stock은 1이거나 그보다 작을 수 없음. 단 -1은 무한재고를 의미함. (stock不能是1或更小。但是-1代表無限庫存。)
                     continue;
             }
 
@@ -449,7 +449,7 @@ public final class ItemTrade extends InGameUI
                 }
             }
 
-            // 플레이어당 거래 제한
+            // 플레이어당 거래 제한 (每位玩家的交易限制)
             if (tradeLimitLeft != Integer.MAX_VALUE)
             {
                 if (!stockText.isEmpty())
@@ -457,7 +457,7 @@ public final class ItemTrade extends InGameUI
                 stockText += tradeLimitString;
             }
 
-            // 배달비
+            // 배달비 (運費)
             String deliveryChargeText = "";
             if (deliveryCharge > 0)
             {

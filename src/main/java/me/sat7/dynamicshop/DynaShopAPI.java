@@ -36,7 +36,7 @@ public final class DynaShopAPI
         return shopData.get().getBoolean("Options.enable", true);
     }
 
-    // 상점 UI생성 후 열기
+    // 상점 UI생성 후 열기 (建立商店UI後開啟)
     public static void openShopGui(Player player, String shopName, int page)
     {
         if(!IsShopEnable(shopName))
@@ -60,7 +60,7 @@ public final class DynaShopAPI
         }
     }
 
-    // 상점 설정 화면
+    // 상점 설정 화면 (商店設定畫面)
     public static void openShopSettingGui(Player player, String shopName)
     {
         ShopSettings uiClass = new ShopSettings();
@@ -68,7 +68,7 @@ public final class DynaShopAPI
         UIManager.Open(player, inventory, uiClass);
     }
 
-    // 상점 로테이트 편집기
+    // 상점 로테이트 편집기 (商店輪換編輯器)
     public static void OpenRotationEditor(Player player, String shopName)
     {
         RotationEditor uiClass = new RotationEditor();
@@ -76,7 +76,7 @@ public final class DynaShopAPI
         UIManager.Open(player, inventory, uiClass);
     }
 
-    // 거래화면 생성 및 열기
+    // 거래화면 생성 및 열기 (建立並開啟交易畫面)
     public static void openItemTradeGui(Player player, String shopName, String tradeIdx)
     {
         if(!IsShopEnable(shopName))
@@ -94,7 +94,7 @@ public final class DynaShopAPI
     }
 
 
-    // 아이탬 파렛트 생성 및 열기
+    // 아이탬 파렛트 생성 및 열기 (建立並開啟物品調色盤)
     public static void openItemPalette(Player player, int uiSubType, String shopName, int targetSlot, int page, String search)
     {
         ItemPalette uiClass = new ItemPalette();
@@ -114,7 +114,7 @@ public final class DynaShopAPI
         UIManager.Open(player, inventory, uiClass);
     }
 
-    // 페이지 에디터 열기
+    // 페이지 에디터 열기 (開啟頁面編輯器)
     public static void openPageEditor(Player player, String shopName, int page)
     {
         PageEditor uiClass = new PageEditor();
@@ -122,7 +122,7 @@ public final class DynaShopAPI
         UIManager.Open(player, inventory, uiClass);
     }
 
-    // 로그뷰어 열기
+    // 로그뷰어 열기 (開啟日誌檢視器)
     public static void openLogViewer(Player player, String shopName)
     {
         LogViewer uiClass = new LogViewer();
@@ -130,7 +130,7 @@ public final class DynaShopAPI
         UIManager.Open(player, inventory, uiClass);
     }
 
-    // 재고 시뮬레이터 열기
+    // 재고 시뮬레이터 열기 (開啟庫存模擬器)
     public static void openStockSimulator(Player player, String shopName)
     {
         StockSimulator uiClass = new StockSimulator();
@@ -138,7 +138,7 @@ public final class DynaShopAPI
         UIManager.Open(player, inventory, uiClass);
     }
 
-    // 스타트 페이지
+    // 스타트 페이지 (起始頁)
     public static void openStartPage(Player player)
     {
         StartPage uiClass = new StartPage();
@@ -146,7 +146,7 @@ public final class DynaShopAPI
         UIManager.Open(player, inventory, uiClass);
     }
 
-    // 상점 목록창
+    // 상점 목록창 (商店列表視窗)
     public static void openShopListUI(Player player, int page, int slotIndex)
     {
         ShopList uiClass = new ShopList();
@@ -154,7 +154,7 @@ public final class DynaShopAPI
         UIManager.Open(player, inventory, uiClass);
     }
 
-    // 컬러 픽커
+    // 컬러 픽커 (顏色選擇器)
     public static void openColorPicker(Player player, int slotIndex)
     {
         ColorPicker uiClass = new ColorPicker();
@@ -162,7 +162,7 @@ public final class DynaShopAPI
         UIManager.Open(player, inventory, uiClass);
     }
 
-    // 퀵셀 창
+    // 퀵셀 창 (快速銷售視窗)
     public static void openQuickSellGUI(Player player)
     {
         QuickSell uiClass = new QuickSell();
@@ -170,13 +170,13 @@ public final class DynaShopAPI
         UIManager.Open(player, inventory, uiClass);
     }
 
-    // 유저 데이터를 다시 만들고 만들어졌는지 확인함.
+    // 유저 데이터를 다시 만들고 만들어졌는지 확인함. (重新建立使用者資料並確認是否已建立)
     public static boolean recreateUserData(Player player)
     {
         return UserUtil.RecreateUserData(player);
     }
 
-    // 스타트페이지 셋팅창
+    // 스타트페이지 셋팅창 (起始頁設定視窗)
     public static void openStartPageSettingGui(Player player, int slotIndex)
     {
         StartPageSettings uiClass = new StartPageSettings();
@@ -245,10 +245,10 @@ public final class DynaShopAPI
 
                 if (!data.get().contains(s + ".value"))
                 {
-                    continue; // 장식용임
+                    continue; // 장식용임 (裝飾用)
                 }
 
-                String itemName = data.get().getString(s + ".mat"); // 메테리얼
+                String itemName = data.get().getString(s + ".mat"); // 메테리얼 (材料)
                 try
                 {
                     Material mat = Material.getMaterial(itemName);

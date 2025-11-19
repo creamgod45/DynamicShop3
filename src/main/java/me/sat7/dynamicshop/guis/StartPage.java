@@ -61,7 +61,7 @@ public final class StartPage extends InGameUI
 
         inventory = Bukkit.createInventory(player, ccStartPage.get().getInt("Options.UiSlotCount"), ccStartPage.get().getString("Options.Title"));
 
-        //아이콘, 이름, 로어, 인덱스, 커맨드
+        //아이콘, 이름, 로어, 인덱스, 커맨드 (圖示, 名稱, 描述, 索引, 指令)
         ConfigurationSection cs = ccStartPage.get().getConfigurationSection("Buttons");
         for (String s : cs.getKeys(false))
         {
@@ -101,7 +101,7 @@ public final class StartPage extends InGameUI
 
                 if (cs.contains(s + ".itemStack"))
                 {
-                    ItemMeta tempMeta = (ItemMeta) cs.get(s + ".itemStack"); // 저장된 메타 적용
+                    ItemMeta tempMeta = (ItemMeta) cs.get(s + ".itemStack"); // 저장된 메타 적용 (套用已儲存的Meta)
                     meta = tempMeta.clone();
                 }
                 else
@@ -149,7 +149,7 @@ public final class StartPage extends InGameUI
             {
                 if (e.getCurrentItem() == null || e.getCurrentItem().getType() == Material.AIR)
                 {
-                    // 새 버튼 추가
+                    // 새 버튼 추가 (新增按鈕)
                     if (player.hasPermission(P_ADMIN_SHOP_EDIT))
                     {
                         StartPage.ccStartPage.get().set("Buttons." + e.getSlot() + ".displayName", "§3New Button");
@@ -177,10 +177,10 @@ public final class StartPage extends InGameUI
                 }
             }
         }
-        // 우클릭
+        // 우클릭 (右鍵點擊)
         else if (player.hasPermission(P_ADMIN_SHOP_EDIT))
         {
-            // 편집
+            // 편집 (編輯)
             if (e.isShiftClick())
             {
                 if (e.getCurrentItem() == null || e.getCurrentItem().getType() == Material.AIR) return;
@@ -188,7 +188,7 @@ public final class StartPage extends InGameUI
                 selectedIndex = e.getSlot();
                 DynaShopAPI.openStartPageSettingGui(player, selectedIndex);
             }
-            // 이동
+            // 이동 (移動)
             else
             {
                 if (selectedIndex == -1)

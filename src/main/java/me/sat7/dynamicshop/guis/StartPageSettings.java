@@ -41,19 +41,19 @@ public final class StartPageSettings extends InGameUI
 
         inventory = Bukkit.createInventory(player, 9, t(player, "START_PAGE.EDITOR_TITLE"));
 
-        CreateCloseButton(player, CLOSE); // 닫기 버튼
+        CreateCloseButton(player, CLOSE); // 닫기 버튼 (關閉按鈕)
 
-        CreateButton(NAME, Material.BOOK, t(player, "START_PAGE.EDIT_NAME"), ""); // 이름 버튼
-        CreateButton(LORE, Material.BOOK, t(player, "START_PAGE.EDIT_LORE"), ""); // 설명 버튼
+        CreateButton(NAME, Material.BOOK, t(player, "START_PAGE.EDIT_NAME"), ""); // 이름 버튼 (名稱按鈕)
+        CreateButton(LORE, Material.BOOK, t(player, "START_PAGE.EDIT_LORE"), ""); // 설명 버튼 (說明按鈕)
 
-        // 아이콘 버튼
+        // 아이콘 버튼 (圖示按鈕)
         CreateButton(ICON, Material.getMaterial(StartPage.ccStartPage.get().getString("Buttons." + slotIndex + ".icon")), t(player, "START_PAGE.EDIT_ICON"), "");
 
         String cmdString = StartPage.ccStartPage.get().getString("Buttons." + slotIndex + ".action");
-        CreateButton(CMD, Material.REDSTONE_TORCH, t(player, "START_PAGE.EDIT_ACTION"), cmdString == null || cmdString.isEmpty() ? null : "§7/" + cmdString); // 액션 버튼
-        CreateButton(SHOP_SHORTCUT, Material.EMERALD, t(player, "START_PAGE.SHOP_SHORTCUT"), ""); // 상점 바로가기 생성 버튼
-        CreateButton(DECO, Material.BLUE_STAINED_GLASS_PANE, t(player, "START_PAGE.CREATE_DECO"), ""); // 장식 버튼
-        CreateButton(DELETE, Material.BONE, t(player, "START_PAGE.REMOVE"), t(player, "START_PAGE.REMOVE_LORE")); // 삭제 버튼
+        CreateButton(CMD, Material.REDSTONE_TORCH, t(player, "START_PAGE.EDIT_ACTION"), cmdString == null || cmdString.isEmpty() ? null : "§7/" + cmdString); // 액션 버튼 (動作按鈕)
+        CreateButton(SHOP_SHORTCUT, Material.EMERALD, t(player, "START_PAGE.SHOP_SHORTCUT"), ""); // 상점 바로가기 생성 버튼 (建立商店捷徑按鈕)
+        CreateButton(DECO, Material.BLUE_STAINED_GLASS_PANE, t(player, "START_PAGE.CREATE_DECO"), ""); // 장식 버튼 (裝飾按鈕)
+        CreateButton(DELETE, Material.BONE, t(player, "START_PAGE.REMOVE"), t(player, "START_PAGE.REMOVE_LORE")); // 삭제 버튼 (刪除按鈕)
 
         return inventory;
     }
@@ -64,12 +64,12 @@ public final class StartPageSettings extends InGameUI
         Player player = (Player) e.getWhoClicked();
         UUID uuid = player.getUniqueId();
 
-        // 돌아가기
+        // 돌아가기 (返回)
         if (e.getSlot() == CLOSE)
         {
             DynaShopAPI.openStartPage(player);
         }
-        // 버튼 삭제
+        // 버튼 삭제 (刪除按鈕)
         else if (e.getSlot() == DELETE)
         {
             StartPage.ccStartPage.get().set("Buttons." + slotIndex, null);
@@ -77,7 +77,7 @@ public final class StartPageSettings extends InGameUI
 
             DynaShopAPI.openStartPage(player);
         }
-        //이름
+        //이름 (名稱)
         else if (e.getSlot() == NAME)
         {
             player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "START_PAGE.ENTER_NAME"));
@@ -85,7 +85,7 @@ public final class StartPageSettings extends InGameUI
             UserUtil.userTempData.put(uuid,"waitforInput" + "btnName");
             OnChat.WaitForInput(player);
         }
-        //설명
+        //설명 (說明)
         else if (e.getSlot() == LORE)
         {
             player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "START_PAGE.ENTER_LORE"));
@@ -93,13 +93,13 @@ public final class StartPageSettings extends InGameUI
             UserUtil.userTempData.put(uuid,"waitforInput" + "btnLore");
             OnChat.WaitForInput(player);
         }
-        //아이콘
+        //아이콘 (圖示)
         else if (e.getSlot() == ICON)
         {
             UserUtil.userInteractItem.put(player.getUniqueId(), "startPage/" + slotIndex);
             DynaShopAPI.openItemPalette(player, 1, "", slotIndex, 1, "");
         }
-        //액션
+        //액션 (動作)
         else if (e.getSlot() == CMD)
         {
             player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "START_PAGE.ENTER_ACTION"));
@@ -107,12 +107,12 @@ public final class StartPageSettings extends InGameUI
             UserUtil.userTempData.put(uuid,"waitforInput" + "btnAction");
             OnChat.WaitForInput(player);
         }
-        // 상점 숏컷
+        // 상점 숏컷 (商店捷徑)
         else if (e.getSlot() == SHOP_SHORTCUT)
         {
             DynaShopAPI.openShopListUI(player, 1, slotIndex);
         }
-        // 장식
+// 장식 (裝飾)
         else if (e.getSlot() == DECO)
         {
             DynaShopAPI.openColorPicker(player, slotIndex);

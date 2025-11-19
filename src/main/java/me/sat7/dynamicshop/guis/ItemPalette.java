@@ -408,7 +408,7 @@ public final class ItemPalette extends InGameUI
         {
             if (inventory.getItem(i) != null)
             {
-                ItemStack original = inventory.getItem(i); // UI 요소가 추가된 상태임.
+                ItemStack original = inventory.getItem(i); // UI 요소가 추가된 상태임. (UI元素已新增的狀態)
                 if (original == null || original.getType() == Material.AIR)
                     continue;
 
@@ -472,7 +472,7 @@ public final class ItemPalette extends InGameUI
         if (item == null || item.getType() == Material.AIR)
             return;
 
-        // 인자로 들어오는 item은 UI요소임
+        // 인자로 들어오는 item은 UI요소임 (作為參數傳入的item是UI元素)
         ItemStack itemStack = CreateItemStackWithRef(item);
 
         if(uiSubType == 0)

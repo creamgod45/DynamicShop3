@@ -39,10 +39,10 @@ public class RotationEditor extends InGameUI
     private final SimpleDateFormat sdf = new SimpleDateFormat("MM.dd.yyyy HH:mm:ss");
     private String timeLore;
 
-    private long period; // 밀리초
-    private long period_new; // 밀리초
-    private long nextTimer; // 밀리초
-    private long nextTimer_new; // 밀리초
+    private long period; // 밀리초 (毫秒)
+    private long period_new; // 밀리초 (毫秒)
+    private long nextTimer; // 밀리초 (毫秒)
+    private long nextTimer_new; // 밀리초 (毫秒)
 
     private int moveTarget;
 
@@ -110,7 +110,7 @@ public class RotationEditor extends InGameUI
 
             nextTimer_new += editAmount;
             nextTimer_new = nextTimer_new / 1000 / 60 / 10;
-            nextTimer_new = nextTimer_new * 1000 * 60 * 10; // 10분단위로 내림처리.
+            nextTimer_new = nextTimer_new * 1000 * 60 * 10; // 10분단위로 내림처리. (以10分鐘為單位進行無條件捨去)
             RefreshUI();
         } else if (e.getSlot() == APPLY_CHANGES)
         {
@@ -160,7 +160,7 @@ public class RotationEditor extends InGameUI
 
     private void UpdateToggleButton()
     {
-        // 활성화 토글
+        // 활성화 토글 (啟用/禁用 切換)
         if (currentRotation != -1)
         {
             String lore = t(player, "ROTATION_EDITOR.CLICK_TO_DISABLE") + "\n\n" + timeLore;
@@ -253,7 +253,7 @@ public class RotationEditor extends InGameUI
     {
         if (isEmptySlot)
         {
-            // 새 로테이션 파일 생성
+            // 새 로테이션 파일 생성 (建立新的輪換檔案)
             if (isLeftClick)
             {
                 RotationUtil.AddNewRotationData(shopName, dataIndex, true);
@@ -261,7 +261,7 @@ public class RotationEditor extends InGameUI
             }
             else if (isRightClick)
             {
-                // 이동
+                // 이동 (移動)
                 if(moveTarget != -1)
                 {
                     RotationUtil.OnRotationFileSlotMoved(shopName, moveTarget, dataIndex);
@@ -272,7 +272,7 @@ public class RotationEditor extends InGameUI
                     }
                     moveTarget = -1;
                 }
-                // 현재 상점 복사하여 새로 만들기
+                // 현재 상점 복사하여 새로 만들기 (複製目前商店以建立新商店)
                 else
                 {
                     RotationUtil.AddNewRotationData(shopName, dataIndex, false);
@@ -283,21 +283,21 @@ public class RotationEditor extends InGameUI
         {
             if (isLeftClick)
             {
-                // 로테이션 적용
+                // 로테이션 적용 (套用輪換)
                 if (currentRotation != dataIndex || isShift)
                 {
                     RotationUtil.ApplyRotation(shopName, currentRotation, dataIndex);
                     currentRotation = dataIndex;
                     RefreshUI();
                 }
-                // 로테이션 적용된 상태의 상점 UI를 연다
+                // 로테이션 적용된 상태의 상점 UI를 연다 (開啟已套用輪換的商店UI)
                 else
                 {
                     DynaShopAPI.openShopGui(player, shopName, 0);
                 }
             } else if (isRightClick)
             {
-                // 로테이션 데이터 삭제
+                // 로테이션 데이터 삭제 (刪除輪換資料)
                 if (isShift)
                 {
                     RotationUtil.DeleteRotationFile(shopName, dataIndex);
@@ -314,7 +314,7 @@ public class RotationEditor extends InGameUI
                     }
                     RefreshUI();
                 }
-                // 이동
+                // 이동 (移動)
                 else
                 {
                     if(moveTarget == -1)

@@ -211,7 +211,7 @@ public final class TabCompleteUtil
                                     {
                                         int i = Integer.parseInt(s);
                                         if (!data.get().contains(s + ".value"))
-                                            continue; // 장식용임
+                                            continue; // 장식용임 (裝飾用)
                                         temp.add(s + "/" + data.get().getString(s + ".mat"));
                                     } catch (Exception ignored)
                                     {

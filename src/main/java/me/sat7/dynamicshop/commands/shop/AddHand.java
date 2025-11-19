@@ -63,7 +63,7 @@ public class AddHand extends DSCMD
                 median = Integer.parseInt(args[6]);
                 stock = Integer.parseInt(args[7]);
 
-                // 유효성 검사
+                // 유효성 검사 (有效性檢查)
                 if (valueMax > 0 && valueMin > 0 && valueMin >= valueMax)
                 {
                     player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.MAX_LOWER_THAN_MIN"));
@@ -92,14 +92,14 @@ public class AddHand extends DSCMD
             return;
         }
 
-        // 손에 뭔가 들고있는지 확인
+        // 손에 뭔가 들고있는지 확인 (檢查手上是否有物品)
         if (player.getInventory().getItemInMainHand() == null || player.getInventory().getItemInMainHand().getType() == Material.AIR)
         {
             player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.HAND_EMPTY"));
             return;
         }
 
-        // 금지품목
+        // 금지품목 (禁止品項)
         if (Material.getMaterial(player.getInventory().getItemInMainHand().getType().toString()) == Material.AIR)
         {
             player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.ITEM_FORBIDDEN"));
@@ -108,22 +108,22 @@ public class AddHand extends DSCMD
 
         DSItem temp = new DSItem(player.getInventory().getItemInMainHand(), buyValue, buyValue, valueMin, valueMax, median, stock);
 
-        // 상점에서 같은 아이탬 찾기
+        // 상점에서 같은 아이탬 찾기 (在商店中尋找相同的物品)
         int idx = ShopUtil.findItemFromShop(shopName, player.getInventory().getItemInMainHand());
-        // 상점에 새 아이탬 추가
+        // 상점에 새 아이탬 추가 (向商店新增物品)
         if (idx == -1)
         {
             idx = ShopUtil.findEmptyShopSlot(shopName, 1, true);
             if (idx == -1)
             {
                 player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.NO_EMPTY_SLOT"));
-            } else if (ShopUtil.addItemToShop(shopName, idx, temp)) // 아이탬 추가
+            } else if (ShopUtil.addItemToShop(shopName, idx, temp)) // 아이탬 추가 (新增物品)
             {
                 player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "MESSAGE.ITEM_ADDED"));
                 ItemsUtil.sendItemInfo(player, shopName, idx, "HELP.ITEM_INFO");
             }
         }
-        // 기존 아이탬 수정
+        // 기존 아이탬 수정 (修改現有物品)
         else
         {
             ShopUtil.editShopItem(shopName, idx, temp);

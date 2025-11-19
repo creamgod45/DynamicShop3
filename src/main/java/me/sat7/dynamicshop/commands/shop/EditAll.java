@@ -85,13 +85,13 @@ public class EditAll extends DSCMD
             return;
         }
 
-        // 수정
+        // 수정 (修改)
         for (String s : shopData.get().getKeys(false))
         {
             try
             {
-                @SuppressWarnings("unused") int i = Integer.parseInt(s); // 의도적으로 넣은 코드임. 숫자가 아니면 건너뛰기 위함.
-                if (!shopData.get().contains(s + ".value")) continue; //장식용임
+                @SuppressWarnings("unused") int i = Integer.parseInt(s); // 의도적으로 넣은 코드임. 숫자가 아니면 건너뛰기 위함. (這是刻意加入的程式碼。目的是為了跳過非數字的情況。)
+                if (!shopData.get().contains(s + ".value")) continue; //장식용임 (裝飾用)
             }
             catch (Exception e)
             {

@@ -65,7 +65,7 @@ public final class Reload extends DSCMD
         QuickSell.quickSellGui.reload();
         QuickSell.SetupQuickSellGUIFile();
 
-        LangUtil.setupLangFile(ConfigUtil.GetLanguage()); // ConfigUtil.Load() 보다 밑에 있어야함.
+        LangUtil.setupLangFile(ConfigUtil.GetLanguage()); // ConfigUtil.Load() 보다 밑에 있어야함. (必須在 ConfigUtil.Load() 之後)
 
         RotationUtil.Reload();
 

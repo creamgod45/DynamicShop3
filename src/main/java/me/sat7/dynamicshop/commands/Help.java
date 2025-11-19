@@ -23,7 +23,7 @@ public final class Help
 
     }
 
-    // 명령어 도움말 표시
+    // 명령어 도움말 표시 (顯示指令說明)
     public static void showHelp(String helpcode, Player player, String[] args)
     {
         if (!UserUtil.ccUser.get().getBoolean(player.getUniqueId() + ".cmdHelp"))

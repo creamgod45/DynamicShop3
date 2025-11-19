@@ -26,17 +26,17 @@ public final class LogUtil
 
     }
 
-    // <로그파일 경로 + 이름, 로그데이타>
-    public static final ConcurrentHashMap<String, ArrayList<String>> log = new ConcurrentHashMap<>(); // 아직 파일에 저장되지 않은 로그들 // todo 서버가 꺼질때 저장해야함.
+    // <로그파일 경로 + 이름, 로그데이타> (<日誌檔案路徑 + 名稱, 日誌資料>)
+    public static final ConcurrentHashMap<String, ArrayList<String>> log = new ConcurrentHashMap<>(); // 아직 파일에 저장되지 않은 로그들 // todo 서버가 꺼질때 저장해야함. (尚未儲存到檔案的日誌 // todo 伺服器關閉時需要儲存)
 
-    // 거래 로그 기록
+    // 거래 로그 기록 (交易日誌紀錄)
     public static void addLog(String shopName, String itemName, int amount, double value, String curr, String player)
     {
         if (ConfigUtil.GetSaveLogs())
         {
             CustomConfig data = ShopUtil.shopConfigFiles.get(shopName);
 
-            if (data.get().contains("Options.log") && data.get().getBoolean("Options.log")) // 옛날엔 이렇게 저장했음.
+            if (data.get().contains("Options.log") && data.get().getBoolean("Options.log")) // 옛날엔 이렇게 저장했음. (過去是這樣儲存的)
             {
                 data.get().set("Options.log.active", true);
             }

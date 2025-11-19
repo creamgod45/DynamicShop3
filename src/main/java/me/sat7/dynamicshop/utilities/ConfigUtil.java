@@ -281,6 +281,11 @@ public final class ConfigUtil
         return config.getBoolean("UI.EnableInventoryClickSearch.Shop");
     }
 
+    public static boolean GetDebugMode()
+    {
+        return config.getBoolean("DebugMode");
+    }
+
     // [ Log ] ==========
 
     public static boolean GetSaveLogs()

@@ -37,7 +37,7 @@ import static org.bukkit.Material.*;
 
 public class OnSignClick implements Listener
 {
-    // 생성
+    // 생성 (建立)
     @EventHandler
     public void onSignChange(SignChangeEvent e) {
         if (!e.getPlayer().hasPermission(P_ADMIN_CREATE_SIGN)) return;
@@ -110,7 +110,7 @@ public class OnSignClick implements Listener
         }
     }
 
-    // 상호작용
+    // 상호작용 (互動)
     @EventHandler
     public void onInteract(PlayerInteractEvent e)
     {
@@ -132,12 +132,12 @@ public class OnSignClick implements Listener
 
                 String signId = CreateID(e.getClickedBlock());
 
-                // 정보가 없음
+                // 정보가 없음 (沒有資訊)
                 if (!DynamicShop.ccSign.get().contains(signId) &&
                         s.getLine(1).length() > 0 &&
                         ShopUtil.shopConfigFiles.containsKey(ChatColor.stripColor(s.getLine(1))))
                 {
-                    // 재생성 시도
+                    // 재생성 시도 (嘗試重建)
                     if (e.getPlayer().hasPermission(P_ADMIN_CREATE_SIGN))
                     {
                         String shop = ChatColor.stripColor(s.getLine(1));
@@ -188,7 +188,7 @@ public class OnSignClick implements Listener
                 String shopName = DynamicShop.ccSign.get().getString(signId + ".shop");
                 if (shopName == null || shopName.length() == 0) return;
 
-                // 상점 존재 확인
+                // 상점 존재 확인 (確認商店是否存在)
                 if (ShopUtil.shopConfigFiles.containsKey(shopName))
                 {
                     if (p.getGameMode() == GameMode.CREATIVE && !p.hasPermission(Constants.P_ADMIN_CREATIVE))
@@ -207,7 +207,7 @@ public class OnSignClick implements Listener
                     }
 
 
-                    //권한 확인
+                    //권한 확인 (權限確認)
                     String permission = ShopUtil.shopConfigFiles.get(shopName).get().getString("Options.permission");
                     if (permission != null && permission.length() > 0)
                     {
@@ -242,7 +242,7 @@ public class OnSignClick implements Listener
         }
     }
 
-    // 파괴
+    // 파괴 (破壞)
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e)
     {
@@ -279,7 +279,7 @@ public class OnSignClick implements Listener
         }
     }
 
-    // 상점 표지판이 폭발하는것 방지
+    // 상점 표지판이 폭발하는것 방지 (防止商店招牌爆炸)
     @EventHandler
     public void onEntityExplode(EntityExplodeEvent event)
     {
@@ -298,7 +298,7 @@ public class OnSignClick implements Listener
         }
     }
 
-    // 상점 표지판이 불타는것 방지
+    // 상점 표지판이 불타는것 방지 (防止商店招牌燒毀)
     @EventHandler
     public void onBlockBurn(BlockBurnEvent e)
     {

@@ -12,7 +12,7 @@ public final class Calc
 
     }
 
-    // 특정 아이탬의 현재 가치를 계산 (다이나믹 or 고정가) (세금 반영)
+    // 특정 아이탬의 현재 가치를 계산 (다이나믹 or 고정가) (세금 반영) (計算特定物品的目前價值（動態或固定價格）（已含稅）)
     public static double getCurrentPrice(String shopName, String idx, boolean buy)
     {
         return getCurrentPrice(shopName, idx, buy, false);
@@ -57,14 +57,14 @@ public final class Calc
             price = max;
         }
 
-        // 할인
+        // 할인 (折扣)
         if (data.contains(idx + ".discount"))
         {
             int discount = data.getInt(idx + ".discount");
             price = price * (100 - discount) / 100;
         }
 
-        // 판매세 계산 (임의 지정된 판매가치가 없는 경우에만)
+        // 판매세 계산 (임의 지정된 판매가치가 없는 경우에만) (計算銷售稅（僅在沒有任意指定銷售價值時）)
         if (!buy && !data.contains(idx + ".value2"))
         {
             double tax = ((price / 100) * getTaxRate(shopName));
@@ -84,7 +84,7 @@ public final class Calc
         }
     }
 
-    // 특정 아이탬의 앞으로 n개의 가치합을 계산 (다이나믹 or 고정가) ([0] 세금 반영된 값, [1] 세금)
+    // 특정 아이탬의 앞으로 n개의 가치합을 계산 (다이나믹 or 고정가) ([0] 세금 반영된 값, [1] 세금) (計算特定物品未來n個的價值總和（動態或固定價格）（[0]含稅值，[1]稅金）)
     public static double[] calcTotalCost(String shopName, String idx, int amount)
     {
         FileConfiguration data = ShopUtil.shopConfigFiles.get(shopName).get();
@@ -139,14 +139,14 @@ public final class Calc
             }
         }
 
-        // 할인
+        // 할인 (折扣)
         if (data.contains(idx + ".discount"))
         {
             int discount = data.getInt(idx + ".discount");
             total = total * (100 - discount) / 100;
         }
 
-        // 세금 적용 (판매가 별도지정시 세금계산 안함)
+        // 세금 적용 (판매가 별도지정시 세금계산 안함) (套用稅金（另外指定售價時不計算稅金）)
         double tax = 0;
         if (amount < 0 && !data.contains(idx + ".value2"))
         {
@@ -169,7 +169,7 @@ public final class Calc
         return new double[]{total, tax};
     }
 
-    // 상점의 세율 반환
+    // 상점의 세율 반환 (傳回商店的稅率)
     public static int getTaxRate(String shopName)
     {
         CustomConfig data = ShopUtil.shopConfigFiles.get(shopName);

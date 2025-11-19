@@ -42,7 +42,7 @@ import java.util.*;
 
 public final class DynamicShop extends JavaPlugin implements Listener
 {
-    private static Economy econ = null; // 볼트에 물려있는 이코노미
+    private static Economy econ = null; // 볼트에 물려있는 이코노미 (與Vault掛鉤的經濟系統)
     public static Economy getEconomy()
     {
         return econ;
@@ -203,14 +203,14 @@ public final class DynamicShop extends JavaPlugin implements Listener
         
         RotationUtil.RestartAllRotationTask();
 
-        // 완료
+        // 완료 (完成)
         console.sendMessage(Constants.DYNAMIC_SHOP_PREFIX + " Enabled! :)");
 
         CheckUpdate();
         InitBstats();
     }
 
-    // 볼트 이코노미 초기화
+    // 볼트 이코노미 초기화 (Vault經濟系統初始化)
     private void SetupVault()
     {
         if (getServer().getPluginManager().getPlugin("Vault") == null)
@@ -380,8 +380,8 @@ public final class DynamicShop extends JavaPlugin implements Listener
             periodicRepetitiveTask.cancel();
         }
 
-        // 1000틱 = 50초 = 마인크래프트 1시간
-        // 20틱 = 현실시간 1초
+        // 1000틱 = 50초 = 마인크래프트 1시간 (1000 tick = 50秒 = Minecraft 1小時)
+        // 20틱 = 현실시간 1초 (20 tick = 現實時間 1秒)
         periodicRepetitiveTask = Bukkit.getScheduler().runTaskTimer(DynamicShop.plugin, this::RepeatAction, 20, 20); 
     }
 
@@ -394,7 +394,7 @@ public final class DynamicShop extends JavaPlugin implements Listener
         //String time = sdf.format(System.currentTimeMillis());
         //console.sendMessage(time + " / " + repeatTaskCount);
 
-        if (repeatTaskCount == 25) // 25초 = 500틱 = 마인크래프트 30분
+        if (repeatTaskCount == 25) // 25초 = 500틱 = 마인크래프트 30분 (25秒 = 500 tick = Minecraft 30分鐘)
         {
             ShopUtil.randomChange(new Random());
             repeatTaskCount = 0;
@@ -458,12 +458,12 @@ public final class DynamicShop extends JavaPlugin implements Listener
 
     private void initCommands()
     {
-        // 명령어 등록 (개별 클레스로 되어있는것들)
+        // 명령어 등록 (개별 클레스로 되어있는것들) (指令註冊（分別在不同的類別中）)
         getCommand("DynamicShop").setExecutor(new Root());
         getCommand("shop").setExecutor(new Optional());
         getCommand("sell").setExecutor(new Sell());
 
-        // 자동완성
+        // 자동완성 (自動完成)
         getCommand("DynamicShop").setTabCompleter(this);
         getCommand("shop").setTabCompleter(this);
         getCommand("sell").setTabCompleter(this);
@@ -484,7 +484,7 @@ public final class DynamicShop extends JavaPlugin implements Listener
     private void makeFolders()
     {
         File shopFolder = new File(getDataFolder(), "Shop");
-        shopFolder.mkdir(); // new 하고 같은줄에서 바로 하면 폴더 안만들어짐.
+        shopFolder.mkdir(); // new 하고 같은줄에서 바로 하면 폴더 안만들어짐. (如果在new的同一行直接執行，資料夾不會建立)
 
         File rotationFolder = new File(getDataFolder(), "Rotation");
         rotationFolder.mkdir();
@@ -498,8 +498,9 @@ public final class DynamicShop extends JavaPlugin implements Listener
         UserUtil.Init();
         ShopUtil.Reload();
         ConfigUtil.Load();
+        DynamicShop.DEBUG_MODE = ConfigUtil.GetDebugMode();
 
-        LangUtil.setupLangFile(ConfigUtil.GetLanguage());  // ConfigUtil.Load() 보다 밑에 있어야함.
+        LangUtil.setupLangFile(ConfigUtil.GetLanguage());  // ConfigUtil.Load() 보다 밑에 있어야함. (必須在 ConfigUtil.Load() 之後)
         LayoutUtil.Setup();
 
         StartPage.setupStartPageFile();
@@ -518,7 +519,7 @@ public final class DynamicShop extends JavaPlugin implements Listener
         ccSign.save();
     }
 
-    // 명령어 자동완성
+    // 명령어 자동완성 (指令自動完成)
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args)
     {
