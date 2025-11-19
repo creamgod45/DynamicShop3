@@ -66,7 +66,7 @@ public class Edit extends DSCMD
             }
             buyValue = Double.parseDouble(args[4]);
 
-            // 삭제
+            // 삭제 (刪除)
             if (buyValue <= 0)
             {
                 ShopUtil.removeItemFromShop(shopName, idx);
@@ -91,7 +91,7 @@ public class Edit extends DSCMD
                     else
                         maxStock = shopData.get().getInt(idx + ".maxStock", -1);
 
-                    // 유효성 검사
+                    // 유효성 검사 (有效性檢查)
                     if (valueMax > 0 && valueMin > 0 && valueMin >= valueMax)
                     {
                         sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.MAX_LOWER_THAN_MIN"));
@@ -115,7 +115,7 @@ public class Edit extends DSCMD
             return;
         }
 
-        // 수정
+        // 수정 (修改)
         int discount = shopData.get().getInt(idx + ".discount");
         int sellLimit = shopData.get().getInt(idx + ".tradeLimitPerPlayer.sell");
         int buyLimit = shopData.get().getInt(idx + ".tradeLimitPerPlayer.buy");

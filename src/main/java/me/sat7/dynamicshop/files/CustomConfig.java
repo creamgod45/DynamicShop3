@@ -15,7 +15,7 @@ import java.nio.file.Files;
 public class CustomConfig
 {
     private File file;
-    protected FileConfiguration customFile; // 버킷의 데이터 타입
+    protected FileConfiguration customFile; // 버킷의 데이터 타입 (Bukkit的資料型態)
 
     //Finds or generates the custom config file
     public void setup(String name, String folder)

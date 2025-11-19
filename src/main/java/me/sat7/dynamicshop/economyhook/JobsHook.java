@@ -20,7 +20,7 @@ public final class JobsHook
 
     }
 
-    // JobsReborn의 points 수정
+    // JobsReborn의 points 수정 (修改JobsReborn的點數)
     public static boolean addJobsPoint(Player p, double amount)
     {
         if (!jobsRebornActive)
@@ -30,7 +30,7 @@ public final class JobsHook
         }
 
         PlayerPoints pp = JobsHook.getJobsPlayerPoints(p);
-        // 차감
+        // 차감 (扣除)
         if (amount < 0.0)
         {
             if (pp.havePoints(amount * -1))
@@ -38,7 +38,7 @@ public final class JobsHook
                 pp.takePoints(amount * -1);
                 return true;
             }
-            // 포인트 부족
+            // 포인트 부족 (點數不足)
             else
             {
                 p.sendMessage(DynamicShop.dsPrefix(p) + t(p, "MESSAGE.NOT_ENOUGH_POINT")
@@ -46,7 +46,7 @@ public final class JobsHook
                 return false;
             }
         }
-        // 증가
+        // 증가 (增加)
         else
         {
             pp.addPoints(amount);
@@ -54,7 +54,7 @@ public final class JobsHook
         }
     }
 
-    // JobsReborn. 플레이어의 잔액 확인
+    // JobsReborn. 플레이어의 잔액 확인 (JobsReborn. 確認玩家餘額)
     public static double getCurJobPoints(Player p)
     {
         JobsPlayer jobsPlayer = Jobs.getPlayerManager().getJobsPlayer(p);

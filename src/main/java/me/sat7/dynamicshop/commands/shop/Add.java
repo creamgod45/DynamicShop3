@@ -69,7 +69,7 @@ public class Add extends DSCMD
                 median = Integer.parseInt(args[7]);
                 stock = Integer.parseInt(args[8]);
 
-                // 유효성 검사
+                // 유효성 검사 (有效性檢查)
                 if (valueMax > 0 && valueMin > 0 && valueMin >= valueMax)
                 {
                     sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.MAX_LOWER_THAN_MIN"));
@@ -98,14 +98,14 @@ public class Add extends DSCMD
             return;
         }
 
-        // 금지품목
+        // 금지품목 (禁止品項)
         if (Material.getMaterial(args[3]) == Material.AIR)
         {
             sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.ITEM_FORBIDDEN"));
             return;
         }
 
-        // 상점에서 같은 아이탬 찾기
+        // 상점에서 같은 아이탬 찾기 (在商店中尋找相同的物品)
         ItemStack itemStack;
         try
         {
@@ -119,20 +119,20 @@ public class Add extends DSCMD
         int idx = ShopUtil.findItemFromShop(shopName, itemStack);
         DSItem temp = new DSItem(itemStack, buyValue, buyValue, valueMin, valueMax, median, stock);
 
-        // 상점에 새 아이탬 추가
+        // 상점에 새 아이탬 추가 (向商店新增物品)
         if (idx == -1)
         {
             idx = ShopUtil.findEmptyShopSlot(shopName, 1, true);
             if (idx == -1)
             {
                 sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.NO_EMPTY_SLOT"));
-            } else if (ShopUtil.addItemToShop(shopName, idx, temp)) // 아이탬 추가
+            } else if (ShopUtil.addItemToShop(shopName, idx, temp)) // 아이탬 추가 (新增物品)
             {
                 sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "MESSAGE.ITEM_ADDED"));
                 ItemsUtil.sendItemInfo(sender, shopName, idx, "HELP.ITEM_INFO");
             }
         }
-        // 기존 아이탬 수정
+        // 기존 아이탬 수정 (修改現有物品)
         else
         {
             ShopUtil.editShopItem(shopName, idx, temp);

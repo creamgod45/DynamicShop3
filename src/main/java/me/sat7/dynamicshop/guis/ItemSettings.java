@@ -113,7 +113,7 @@ public final class ItemSettings extends InGameUI
 
         CreateButton(SHIFT, Material.BLACK_STAINED_GLASS_PANE, "Shift = x5", "");
 
-        // 조절버튼
+        // 조절버튼 (調整按鈕)
         if (dsItem.getBuyValue() == dsItem.getSellValue())
             sellValueStr = "§8" + ChatColor.stripColor(sellValueStr);
         if (dsItem.getMinPrice() <= 0.0001)
@@ -174,7 +174,7 @@ public final class ItemSettings extends InGameUI
             if(buyPrice < 0.0001)
                 buyPrice = 0.0001;
 
-            if (dsItem.getBuyValue() != dsItem.getSellValue()) // 판매가 별도설정
+            if (dsItem.getBuyValue() != dsItem.getSellValue()) // 판매가 별도설정 (另外設定售價)
             {
                 editBtnLore.add("§7" + ChatColor.stripColor(t(null, "ITEM_SETTING.TAX_IGNORED")));
                 sellPrice = (dsItem.getSellValue() * dsItem.getMedian()) / dsItem.getStock();
@@ -233,7 +233,7 @@ public final class ItemSettings extends InGameUI
             else if (currentTab == MAX_STOCK) CreateButton(SET_TO_OTHER, yellow, t(null, "ITEM_SETTING.SET_TO_STOCK"), editBtnLore);
         }
 
-        inventory.setItem(SAMPLE_ITEM, dsItem.getItemStack()); // 아이탬 견본
+        inventory.setItem(SAMPLE_ITEM, dsItem.getItemStack()); // 아이탬 견본 (物品樣本)
         inventory.getItem(SAMPLE_ITEM).setAmount(1);
 
         double worth = TryGetWorth(dsItem.getItemStack().getType().name());
@@ -286,11 +286,11 @@ public final class ItemSettings extends InGameUI
                          t(player, "ITEM_SETTING.TRADE_LIMIT_TIMER_LORE").replace("{num}", String.valueOf(timerOffset / 1000 / 60 / 60)).replace("{time}", tradeLimitNextTimerString));
         }
 
-        CreateButton(RECOMMEND, Material.NETHER_STAR, t(player, "ITEM_SETTING.RECOMMEND"), recommendLore); // 추천 버튼
+        CreateButton(RECOMMEND, Material.NETHER_STAR, t(player, "ITEM_SETTING.RECOMMEND"), recommendLore); // 추천 버튼 (推薦按鈕)
 
-        CreateButton(DONE, Material.STRUCTURE_VOID, t(player, "ITEM_SETTING.DONE"), t(player, "ITEM_SETTING.DONE_LORE")); // 완료 버튼
-        CreateButton(CLOSE, Material.BARRIER, t(player, "ITEM_SETTING.CLOSE"), t(player, "ITEM_SETTING.CLOSE_LORE")); // 닫기 버튼
-        CreateButton(REMOVE, Material.BONE, t(player, "ITEM_SETTING.REMOVE"), t(player, "ITEM_SETTING.REMOVE_LORE")); // 삭제 버튼
+        CreateButton(DONE, Material.STRUCTURE_VOID, t(player, "ITEM_SETTING.DONE"), t(player, "ITEM_SETTING.DONE_LORE")); // 완료 버튼 (完成按鈕)
+        CreateButton(CLOSE, Material.BARRIER, t(player, "ITEM_SETTING.CLOSE"), t(player, "ITEM_SETTING.CLOSE_LORE")); // 닫기 버튼 (關閉按鈕)
+        CreateButton(REMOVE, Material.BONE, t(player, "ITEM_SETTING.REMOVE"), t(player, "ITEM_SETTING.REMOVE_LORE")); // 삭제 버튼 (刪除按鈕)
 
         return inventory;
     }
@@ -318,7 +318,7 @@ public final class ItemSettings extends InGameUI
         else if (e.getSlot() == TRADE_LIMIT_INTERVAL_TIMER) OnTradeLimitTimerAdjustButtonClick(e.isLeftClick(), e.isShiftClick());
         else if (e.getSlot() >= TAB_START && e.getSlot() <= TAB_END) ChangeTab(e.getSlot());
         else if (e.getSlot() == RESET) Reset();
-        else if (e.getSlot() >= 18 && e.getSlot() < 27) PlusMinus(e.isShiftClick(), e.getCurrentItem()); // RESET 이 22인것에 주의
+        else if (e.getSlot() >= 18 && e.getSlot() < 27) PlusMinus(e.isShiftClick(), e.getCurrentItem()); // RESET 이 22인것에 주의 (注意RESET是22)
         else if (e.getSlot() == DIVIDE) Divide(e.isShiftClick());
         else if (e.getSlot() == MULTIPLY) Multiply(e.isShiftClick());
         else if (e.getSlot() == ROUND_DOWN) RoundDown();
@@ -328,7 +328,7 @@ public final class ItemSettings extends InGameUI
 
     private void SaveSetting()
     {
-        // 유효성 검사
+        // 유효성 검사 (有效性檢查)
         if (dsItem.maxPrice > 0 && dsItem.buyValue > dsItem.maxPrice)
         {
             player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.DEFAULT_VALUE_OUT_OF_RANGE"));

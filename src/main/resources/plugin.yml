@@ -4,7 +4,7 @@ main: me.sat7.dynamicshop.DynamicShop
 depend: [Vault]
 softdepend: [PlaceholderAPI, Jobs, LocaleLib, PlayerPoints]
 api-version: 1.16
-authors: [sat7, jpenilla, Multitallented, Chris6ix, KevinDaGame, FlorianKoerner, Kapitowa, LincolnJota]
+authors: [sat7, jpenilla, Multitallented, Chris6ix, KevinDaGame, FlorianKoerner, Kapitowa, LincolnJota, CreamGod45]
 description: Full GUI shop with dynamic prices
 commands:
   DynamicShop:
@@ -15,6 +15,57 @@ commands:
   sell:
     description: "Sell items"
 permissions:
+  dshop.admin.creative:
+    description: Allows users to use creative mode commands.
+    default: op
+  dshop.admin.remoteaccess:
+    description: Allows remote access to the shop.
+    default: op
+  dshop.admin.deleteOldUser:
+    description: Allows deletion of old user data.
+    default: op
+  dshop.admin.setdefaultshop:
+    description: Allows setting the default shop.
+    default: op
+  dshop.admin.settax:
+    description: Allows setting taxes for the shop.
+    default: op
+  dshop.admin.reload:
+    description: Allows reloading the plugin.
+    default: op
+  dshop.admin.createsign:
+    description: Allows creating shop signs.
+    default: op
+  dshop.admin.destroysign:
+    description: Allows destroying shop signs.
+    default: op
+  dshop.admin.createshop:
+    description: Allows creating a new shop.
+    default: op
+  dshop.admin.deleteshop:
+    description: Allows deleting a shop.
+    default: op
+  dshop.admin.mergeshop:
+    description: Allows merging shops.
+    default: op
+  dshop.admin.renameshop:
+    description: Allows renaming a shop.
+    default: op
+  dshop.admin.copyshop:
+    description: Allows copying a shop.
+    default: op
+  dshop.admin.shopedit:
+    description: Allows editing a shop.
+    default: op
+  dshop.admin.openshop:
+    description: Allows opening a shop.
+    default: op
+  dshop.admin.editall:
+    description: Allows editing all shops.
+    default: op
+  dshop.admin.iteminfo:
+    description: Allows viewing item information.
+    default: op
   dshop.use:
     description: Allows use of the /ds command
     default: true

@@ -16,7 +16,7 @@ public final class SoundUtil
 
     }
 
-    // 소리 재생
+    // 소리 재생 (播放音效)
     public static void playerSoundEffect(Player player, String key)
     {
         try

@@ -54,9 +54,9 @@ public class SellBuy extends DSCMD
         {
             try
             {
-                // i를 직접 사용하지는 않지만 의도적으로 넣은 코드임.
+                // i를 직접 사용하지는 않지만 의도적으로 넣은 코드임. (雖然沒有直接使用i，但這是刻意加入的程式碼。)
                 int i = Integer.parseInt(s);
-                if (!shopData.get().contains(s + ".value")) continue; //장식용임
+                if (!shopData.get().contains(s + ".value")) continue; //장식용임 (裝飾用)
             } catch (Exception e)
             {
                 continue;

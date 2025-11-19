@@ -92,10 +92,10 @@ public final class ShopSettings extends InGameUI
         CustomConfig data = ShopUtil.shopConfigFiles.get(shopName);
         ConfigurationSection confSec_Options = data.get().getConfigurationSection("Options");
 
-        // 닫기 버튼
+        // 닫기 버튼 (關閉按鈕)
         CreateCloseButton(player, CLOSE);
 
-        // 활성화 버튼
+        // 활성화 (啟用) 버튼 (啟用按鈕)
         boolean isShopEnable = confSec_Options.getBoolean("enable", true);
         Material enableToggleMat = isShopEnable ? Material.GREEN_STAINED_GLASS : Material.RED_STAINED_GLASS;
         String current = isShopEnable ? t(player, "SHOP_SETTING.STATE_ENABLE") : t(player, "SHOP_SETTING.STATE_DISABLE");
@@ -104,7 +104,7 @@ public final class ShopSettings extends InGameUI
         enableToggleLore += "\n§e" + t(player, "CLICK") + ": " + set;
         CreateButton(ENABLE_TOGGLE, enableToggleMat, t(player, "SHOP_SETTING.STATE"), enableToggleLore);
 
-        // 권한 버튼
+        // 권한 (權限) 버튼 (權限按鈕)
         String permStr = confSec_Options.getString("permission");
         String permNew = "dshop.user.shop." + shopName;
         Material permIcon;
@@ -128,22 +128,22 @@ public final class ShopSettings extends InGameUI
         permLore.add("§e" + t(player, "CLICK") + ": " + permNew);
         CreateButton(PERMISSION, permIcon, t(player, "SHOP_SETTING.PERMISSION"), permLore);
 
-        //최대 페이지 버튼
+        //최대 페이지 버튼 (最大頁數按鈕)
         CreateButton(MAX_PAGE, InGameUI.GetPageButtonIconMat(), t(player, "SHOP_SETTING.MAX_PAGE"), new ArrayList<>(Arrays.asList(t(player, "SHOP_SETTING.MAX_PAGE_LORE"), t(player, "SHOP_SETTING.L_R_SHIFT"))), data.get().getInt("Options.page"));
 
-        // 배경 색상
+        // 배경 색상 (背景顏色)
         String color = confSec_Options.getString("background","");
         Material mat = Material.getMaterial( color.toUpperCase() + "_CONCRETE");
         if (mat == null)
             mat = Material.LIGHT_GRAY_CONCRETE;
         CreateButton(BACKGROUND, mat, t(player, "SHOP_SETTING.BACKGROUND"), t(player, "SHOP_SETTING.BACKGROUND_LORE"));
 
-        // 로테이션 에디터
+        // 로테이션 에디터 (輪換編輯器)
         int currentRotation = confSec_Options.getInt("Rotation.Current", -1);
         String rotationString = currentRotation == -1 ? t(player, "ROTATION_EDITOR.DISABLED") : String.valueOf(currentRotation + 1);
         CreateButton(ROTATION_EDITOR, Material.CLOCK, t(player, "SHOP_SETTING.ROTATION_EDITOR") + rotationString, t(player, "SHOP_SETTING.ROTATION_EDITOR_LORE"));
 
-        // 영업시간 버튼
+        // 영업시간 버튼 (營業時間按鈕)
         int curTime = (int) (player.getWorld().getTime()) / 1000 + 6;
         if (curTime > 24) curTime -= 24;
         if (data.get().contains("Options.shophours"))
@@ -170,7 +170,7 @@ public final class ShopSettings extends InGameUI
             CreateButton(SHOP_HOUR, Material.CLOCK, t(player, "TIME.SHOPHOURS"), shopHourLore);
         }
 
-        // 랜덤스톡 버튼
+        // 랜덤스톡 (隨機庫存) 버튼 (隨機庫存按鈕)
         ConfigurationSection flucConf = data.get().getConfigurationSection("Options.fluctuation");
         if (flucConf != null)
         {
@@ -205,7 +205,7 @@ public final class ShopSettings extends InGameUI
             inventory.setItem(FLUC, flucToggleBtn);
         }
 
-        // 재고 안정화 버튼
+        // 재고 안정화 버튼 (庫存穩定按鈕)
         ConfigurationSection stockStableConf = data.get().getConfigurationSection("Options.stockStabilizing");
         if (stockStableConf != null)
         {
@@ -237,7 +237,7 @@ public final class ShopSettings extends InGameUI
             CreateButton(STABLE, Material.COMPARATOR, t(player, "STOCK_STABILIZING.SS"), stableLore);
         }
 
-        // 커맨드 버튼
+        // 커맨드 버튼 (指令按鈕)
         boolean cmdEnabled = confSec_Options.contains("command.active") && confSec_Options.getBoolean("command.active");
         ArrayList<String> CmdToggleLore = new ArrayList<>(Arrays.asList(
                 t(player, "SHOP_SETTING.COMMAND_TOGGLE_LORE"),
@@ -291,7 +291,7 @@ public final class ShopSettings extends InGameUI
         CreateButton(CMD_SELL, sellCmdValid ? Material.GREEN_STAINED_GLASS_PANE : Material.BLACK_STAINED_GLASS_PANE, t(player, "SHOP_SETTING.COMMAND_SELL"), sellCmdLore);
         CreateButton(CMD_BUY, buyCmdValid ? Material.RED_STAINED_GLASS_PANE : Material.BLACK_STAINED_GLASS_PANE, t(player, "SHOP_SETTING.COMMAND_BUY"), buyCmdLore);
 
-        // 세금
+        // 세금 (稅金)
         int globalTax = ConfigUtil.getCurrentTax();
         if (data.get().contains("Options.SalesTax"))
         {
@@ -314,7 +314,7 @@ public final class ShopSettings extends InGameUI
             CreateButton(TAX_TOGGLE, Material.IRON_INGOT, t(player, "TAX.SALES_TAX"), taxLore);
         }
 
-        // 플래그 버튼들
+        // 플래그 버튼들 (旗標按鈕)
         CreateFlagButton(FLAG_SIGNSHOP, confSec_Options.contains("flag.signshop"), "signShop", t(player, "SHOP_SETTING.SIGN_SHOP_LORE"));
         CreateFlagButton(FLAG_LOCALSHOP, confSec_Options.contains("flag.localshop"), "localShop", t(player, "SHOP_SETTING.LOCAL_SHOP_LORE"));
         CreateFlagButton(FLAG_DELIVERY, confSec_Options.contains("flag.deliverycharge"), "deliveryCharge", t(player, "SHOP_SETTING.DELIVERY_CHARGE_LORE"));
@@ -337,7 +337,7 @@ public final class ShopSettings extends InGameUI
         CreateCurrencyButton(CURRENCY_JP, currency.equalsIgnoreCase(Constants.S_JOBPOINT), t(player, "SHOP_SETTING.CURRENCY") + "JobPoint", t(player, "SHOP_SETTING.JOB_POINT_LORE"));
         CreateCurrencyButton(CURRENCY_PP, currency.equalsIgnoreCase(Constants.S_PLAYERPOINT), t(player, "SHOP_SETTING.CURRENCY") + "PlayerPoint", t(player, "SHOP_SETTING.PLAYER_POINT_LORE"));
 
-        // 로그 버튼
+        // 로그 버튼 (日誌按鈕)
         String log_cur;
         String log_set;
         if (confSec_Options.contains("log.active") && confSec_Options.getBoolean("log.active"))
@@ -367,7 +367,7 @@ public final class ShopSettings extends InGameUI
         logLore_3.add("§e" + t(player, "LMB") + ": " + (printToAdminActive ? t(player, "OFF") : t(player, "ON")));
         CreateButton(LOG_PRINT_ADMIN, printToAdminActive ? Material.GREEN_STAINED_GLASS_PANE : Material.BLACK_STAINED_GLASS_PANE, t(player, "SHOP_SETTING.LOG_PRINT_ADMIN"), logLore_3);
 
-        // 거래 UI 설정
+        // 거래 UI 설정 (交易UI設定)
         ArrayList<String> tradeUILore = new ArrayList<>();
         tradeUILore.add("§9" + t(null, "CUR_STATE") + ": " + (confSec_Options.contains("tradeUI") ? confSec_Options.get("tradeUI") : t(player,"NULL")));
         tradeUILore.add(t(player, "SHOP_SETTING.TRADE_UI_LORE_2"));
@@ -383,12 +383,12 @@ public final class ShopSettings extends InGameUI
 
         CustomConfig data = ShopUtil.shopConfigFiles.get(shopName);
 
-        // 닫기버튼
+        // 닫기버튼 (關閉按鈕)
         if (e.getSlot() == CLOSE)
         {
             DynaShopAPI.openShopGui(player, shopName, 1);
         }
-        // 활성화
+        // 활성화 (啟用)
         if (e.getSlot() == ENABLE_TOGGLE)
         {
             if (data.get().getBoolean("Options.enable", true))
@@ -400,7 +400,7 @@ public final class ShopSettings extends InGameUI
             }
             DynaShopAPI.openShopSettingGui(player, shopName);
         }
-        // 권한
+        // 권한 (權限)
         else if (e.getSlot() == PERMISSION)
         {
             if (data.get().getString("Options.permission").isEmpty())
@@ -412,7 +412,7 @@ public final class ShopSettings extends InGameUI
             }
             DynaShopAPI.openShopSettingGui(player, shopName);
         }
-        // 최대 페이지
+        // 최대 페이지 (最大頁數)
         else if (e.getSlot() == MAX_PAGE)
         {
             int oldvalue = data.get().getInt("Options.page");
@@ -433,12 +433,12 @@ public final class ShopSettings extends InGameUI
             }
             DynaShopAPI.openShopSettingGui(player, shopName);
         }
-        // 배경 색상 변경
+        // 배경 색상 변경 (變更背景顏色)
         else if (e.getSlot() == BACKGROUND)
         {
             DynaShopAPI.openColorPicker(player, -1);
         }
-        // 로테이션 편집기
+        // 로테이션 편집기 (輪換編輯器) (輪換編輯器)
         else if (e.getSlot() == ROTATION_EDITOR)
         {
             DynaShopAPI.OpenRotationEditor(player, shopName);
@@ -506,7 +506,7 @@ public final class ShopSettings extends InGameUI
                 }
             }
         }
-        // 랜덤스톡
+        // 랜덤스톡 (隨機庫存)
         else if (e.getSlot() == FLUC || e.getSlot() == FLUC_INTERVAL || e.getSlot() == FLUC_STRENGTH)
         {
             if (data.get().contains("Options.fluctuation"))
@@ -565,7 +565,7 @@ public final class ShopSettings extends InGameUI
                 }
             }
         }
-        // 스톡 안정화
+        // 스톡 안정화 (庫存穩定) (庫存穩定)
         else if (e.getSlot() == STABLE || e.getSlot() == STABLE_INTERVAL || e.getSlot() == STABLE_STRENGTH)
         {
             if (data.get().contains("Options.stockStabilizing"))
@@ -624,10 +624,10 @@ public final class ShopSettings extends InGameUI
                 }
             }
         }
-        // 세금
+        // 세금 (稅金)
         else if (e.getSlot() == TAX_TOGGLE || e.getSlot() == TAX_AMOUNT)
         {
-            // 전역,지역 토글
+            // 전역,지역 토글 (全域/區域 切換)
             if (e.getSlot() == TAX_TOGGLE)
             {
                 if (data.get().contains("Options.SalesTax"))
@@ -640,7 +640,7 @@ public final class ShopSettings extends InGameUI
 
                 DynaShopAPI.openShopSettingGui(player, shopName);
             }
-            // 수치설정
+            // 수치설정 (數值設定)
             else if (data.get().contains("Options.SalesTax"))
             {
                 int edit = -1;
@@ -654,7 +654,7 @@ public final class ShopSettings extends InGameUI
             }
             data.save();
         }
-        // signshop
+        // signshop (招牌商店)
         else if (e.getSlot() == FLAG_SIGNSHOP)
         {
             if (data.get().contains("Options.flag.signshop"))
@@ -666,7 +666,7 @@ public final class ShopSettings extends InGameUI
             }
             DynaShopAPI.openShopSettingGui(player, shopName);
         }
-        // localshop
+        // localshop (本地商店)
         else if (e.getSlot() == FLAG_LOCALSHOP)
         {
             if (data.get().contains("Options.flag.localshop"))
@@ -678,7 +678,7 @@ public final class ShopSettings extends InGameUI
             }
             DynaShopAPI.openShopSettingGui(player, shopName);
         }
-        // deliverycharge
+        // deliverycharge (運費)
         else if (e.getSlot() == FLAG_DELIVERY)
         {
             if (data.get().contains("Options.flag.deliverycharge"))
@@ -690,7 +690,7 @@ public final class ShopSettings extends InGameUI
             }
             DynaShopAPI.openShopSettingGui(player, shopName);
         }
-        // showValueChange
+        // showValueChange (顯示價值變化)
         else if (e.getSlot() == FLAG_SHOW_VALUE_CHANGE)
         {
             if (data.get().contains("Options.flag.showvaluechange"))
@@ -702,7 +702,7 @@ public final class ShopSettings extends InGameUI
             }
             DynaShopAPI.openShopSettingGui(player, shopName);
         }
-        // HIDE_STOCK
+        // HIDE_STOCK (隱藏庫存)
         else if (e.getSlot() == FLAG_HIDE_STOCK)
         {
             if (data.get().contains("Options.flag.hidestock"))
@@ -714,7 +714,7 @@ public final class ShopSettings extends InGameUI
             }
             DynaShopAPI.openShopSettingGui(player, shopName);
         }
-        // HIDE_PRICING_TYPE
+        // HIDE_PRICING_TYPE (隱藏價格類型)
         else if (e.getSlot() == FLAG_HIDE_PRICING_TYPE)
         {
             if (data.get().contains("Options.flag.hidepricingtype"))
@@ -726,7 +726,7 @@ public final class ShopSettings extends InGameUI
             }
             DynaShopAPI.openShopSettingGui(player, shopName);
         }
-        // HIDE_SHOP_BALANCE
+        // HIDE_SHOP_BALANCE (隱藏商店餘額)
         else if (e.getSlot() == FLAG_HIDE_SHOP_BALANCE)
         {
             if (data.get().contains("Options.flag.hideshopbalance"))
@@ -738,7 +738,7 @@ public final class ShopSettings extends InGameUI
             }
             DynaShopAPI.openShopSettingGui(player, shopName);
         }
-        // SHOW_MAX_STOCK
+        // SHOW_MAX_STOCK (顯示最大庫存)
         else if (e.getSlot() == FLAG_SHOW_MAX_STOCK)
         {
             if (data.get().contains("Options.flag.showmaxstock"))
@@ -750,7 +750,7 @@ public final class ShopSettings extends InGameUI
             }
             DynaShopAPI.openShopSettingGui(player, shopName);
         }
-        // HIDDEN_IN_COMMAND
+        // HIDDEN_IN_COMMAND (在指令中隱藏)
         else if (e.getSlot() == FLAG_HIDDEN_IN_COMMAND)
         {
             if (data.get().contains("Options.flag.hiddenincommand"))
@@ -762,7 +762,7 @@ public final class ShopSettings extends InGameUI
             }
             DynaShopAPI.openShopSettingGui(player, shopName);
         }
-        // log
+        // log (日誌)
         else if (e.getSlot() == LOG_TOGGLE)
         {
             if (e.isLeftClick())
@@ -796,7 +796,7 @@ public final class ShopSettings extends InGameUI
 
             DynaShopAPI.openShopSettingGui(player, shopName);
         }
-        // 명령어
+        // 명령어 (指令)
         else if (e.getSlot() == CMD_TOGGLE)
         {
             boolean active = data.get().contains("Options.command.active") && data.get().getBoolean("Options.command.active");
@@ -849,7 +849,7 @@ public final class ShopSettings extends InGameUI
                 OnChat.WaitForInput(player);
             }
         }
-        // INTEGER_ONLY
+        // INTEGER_ONLY (僅整數)
         else if (e.getSlot() == FLAG_INT_ONLY)
         {
             if (data.get().contains("Options.flag.integeronly"))
@@ -865,7 +865,7 @@ public final class ShopSettings extends InGameUI
             }
             DynaShopAPI.openShopSettingGui(player, shopName);
         }
-        // vault
+        // vault (金庫)
         else if (e.getSlot() == CURRENCY_VAULT)
         {
             if (!currency.equalsIgnoreCase(Constants.S_VAULT))
@@ -874,7 +874,7 @@ public final class ShopSettings extends InGameUI
             }
             DynaShopAPI.openShopSettingGui(player, shopName);
         }
-        // exp
+        // exp (經驗)
         else if (e.getSlot() == CURRENCY_EXP)
         {
             if (!currency.equalsIgnoreCase(Constants.S_EXP))
@@ -884,7 +884,7 @@ public final class ShopSettings extends InGameUI
             }
             DynaShopAPI.openShopSettingGui(player, shopName);
         }
-        // jobpoint
+        // jobpoint (職業點數)
         else if (e.getSlot() == CURRENCY_JP)
         {
             if (!JobsHook.jobsRebornActive)
@@ -899,7 +899,7 @@ public final class ShopSettings extends InGameUI
             }
             DynaShopAPI.openShopSettingGui(player, shopName);
         }
-        // Player point
+        // Player point (玩家點数)
         else if (e.getSlot() == CURRENCY_PP)
         {
             if (!PlayerpointHook.isPPActive)

@@ -83,7 +83,7 @@ public final class QuickSell extends InGameUI
         {
             if (e.isLeftClick())
             {
-                // 찾은 상점에 판매
+                // 찾은 상점에 판매 (銷售到找到的商店)
                 Sell.quickSellItem(player, e.getCurrentItem(), topShopName, tradeIdx, e.isShiftClick(), e.getSlot());
             } else if (e.isRightClick())
             {

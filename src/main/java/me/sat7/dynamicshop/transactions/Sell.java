@@ -47,7 +47,7 @@ public final class Sell
         double deliveryCharge = ShopUtil.CalcShipping(shopName, player);
         double priceSum = -deliveryCharge;
 
-        // 실제 판매 가능량 확인
+        // 실제 판매 가능량 확인 (確認實際可銷售數量)
         int tradeAmount;
         if (player != null)
         {
@@ -71,7 +71,7 @@ public final class Sell
             tradeAmount = Math.max(0, tradeAmount);
         }
 
-        // 판매할 아이탬이 없음
+        // 판매할 아이탬이 없음 (沒有可銷售的物品)
         if (tradeAmount == 0)
         {
             if (player != null)
@@ -81,7 +81,7 @@ public final class Sell
             return 0;
         }
 
-        // 플레이어 당 거래량 제한 확인
+        // 플레이어 당 거래량 제한 확인 (確認每個玩家的交易限制)
         int sellLimit = ShopUtil.GetSellLimitPerPlayer(shopName, tradeIdx);
         if (player != null && sellLimit != 0)
         {
@@ -93,11 +93,11 @@ public final class Sell
             }
         }
 
-        // 비용 계산
+        // 비용 계산 (計算費用)
         double[] calcResult = Calc.calcTotalCost(shopName, String.valueOf(tradeIdx), -tradeAmount);
         priceSum += calcResult[0];
 
-        // 계산된 비용에 대한 처리 시도
+        // 계산된 비용에 대한 처리 시도 (嘗試處理計算出的費用)
         Economy econ = DynamicShop.getEconomy();
         if (!CheckTransactionSuccess(currencyType, player, priceSum))
         {
@@ -105,7 +105,7 @@ public final class Sell
             return 0;
         }
 
-        // 플레이어 인벤토리에서 아이템 제거
+        // 플레이어 인벤토리에서 아이템 제거 (從玩家背包中移除物品)
         if (player != null)
         {
             if (isShiftClick)
@@ -154,43 +154,43 @@ public final class Sell
             player.updateInventory();
         }
 
-        // 플레이어 당 거래량 제한 아이템에 대한 처리.
+        // 플레이어 당 거래량 제한 아이템에 대한 처리. (處理每個玩家的交易限制物品)
         if (player != null & sellLimit != Integer.MIN_VALUE)
         {
             UserUtil.OnPlayerTradeLimitedItem(player, shopName, HashUtil.GetItemHash(itemStack), tradeAmount, true);
         }
 
-        // 로그 기록
+        // 로그 기록 (日誌記錄)
         LogUtil.addLog(shopName, itemStack.getType().toString(), -tradeAmount, priceSum, currencyType, player != null ? player.getName() : shopName);
 
         if (player != null)
         {
-            // 플레이어에게 메시지 출력
+            // 플레이어에게 메시지 출력 (向玩家輸出訊息)
             SendSellMessage(currencyType, econ, player, tradeAmount, priceSum, itemStack);
 
-            // 플레이어에게 소리 재생
+            // 플레이어에게 소리 재생 (向玩家播放音效)
             if (playSound)
                 player.playSound(player.getLocation(), Sound.valueOf("ENTITY_EXPERIENCE_ORB_PICKUP"), 1, 1);
         }
 
-        // 상점 계좌 잔액 수정
+        // 상점 계좌 잔액 수정 (修改商店帳戶餘額)
         if (data.get().contains("Options.Balance"))
         {
             ShopUtil.addShopBalance(shopName, priceSum * -1);
         }
-        // 상점 재고 증가
+        // 상점 재고 증가 (增加商店庫存)
         if (stockOld > 0)
         {
             data.get().set(tradeIdx + ".stock", MathUtil.SafeAdd(stockOld, tradeAmount));
         }
 
-        // 커맨드 실행
+        // 커맨드 실행 (執行指令)
         RunSellCommand(data, player, shopName, itemStack, tradeAmount, priceSum, calcResult[1]);
 
-        // 더티
+        // 더티 (Dirty)
         ShopUtil.shopDirty.put(shopName, true);
 
-        // 이벤트 호출
+        // 이벤트 호출 (呼叫事件)
         if (player != null)
         {
             ShopBuySellEvent event = new ShopBuySellEvent(false, priceBuyOld, Calc.getCurrentPrice(shopName, String.valueOf(tradeIdx), true),
@@ -213,14 +213,14 @@ public final class Sell
         double priceSellOld = DynaShopAPI.getSellPrice(shopName, itemStack);
         double priceBuyOld = Calc.getCurrentPrice(shopName, String.valueOf(tradeIdx), true);
         int stockOld = data.get().getInt(tradeIdx + ".stock");
-        // 상점에 돈이 없음
+        // 상점에 돈이 없음 (商店金額不足)
         if (ShopUtil.getShopBalance(shopName) != -1 && ShopUtil.getShopBalance(shopName) < Calc.calcTotalCost(shopName, tradeIdx, itemStack.getAmount())[0])
         {
             player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "MESSAGE.SHOP_BAL_LOW"));
             return;
         }
 
-        // 상점이 매입을 거절.
+        // 상점이 매입을 거절. (商店拒絕收購)
         int stock = data.get().getInt(tradeIdx + ".stock");
         int maxStock = data.get().getInt(tradeIdx + ".maxStock", -1);
         if (maxStock != -1 && maxStock <= stock)
@@ -229,7 +229,7 @@ public final class Sell
             return;
         }
 
-        // 실제 판매 가능량 확인
+        // 실제 판매 가능량 확인 (確認實際可銷售數量)
         int tradeAmount = itemStack.getAmount();
         int playerHas = GetPlayerItemCount(player, itemStack);
         if (tradeAmount > playerHas)
@@ -237,7 +237,7 @@ public final class Sell
             tradeAmount = playerHas;
         }
 
-        // 판매할 아이탬이 없음
+        // 판매할 아이탬이 없음 (沒有可銷售的物品)
         if (tradeAmount == 0)
         {
             player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "MESSAGE.NO_ITEM_TO_SELL"));
@@ -250,7 +250,7 @@ public final class Sell
             tradeAmount = Math.max(0, tradeAmount);
         }
 
-        // 플레이어 당 거래량 제한 확인
+        // 플레이어 당 거래량 제한 확인 (確認每個玩家的交易限制)
         int tradeIdxInt = Integer.parseInt(tradeIdx);
         int tradeLimitPerPlayer = ShopUtil.GetSellLimitPerPlayer(shopName, tradeIdxInt);
         if (tradeLimitPerPlayer != 0)
@@ -260,58 +260,58 @@ public final class Sell
                 return;
         }
 
-        // 비용 계산
+        // 비용 계산 (計算費用)
         double[] calcResult = Calc.calcTotalCost(shopName, tradeIdx, -tradeAmount);
         priceSum += calcResult[0];
 
-        // 계산된 비용에 대한 처리 시도
+        // 계산된 비용에 대한 처리 시도 (嘗試處理計算出的費用)
         Economy econ = DynamicShop.getEconomy();
         if (!CheckTransactionSuccess(currency, player, priceSum))
             return;
 
-        // 플레이어 인벤토리에서 아이템 제거
+        // 플레이어 인벤토리에서 아이템 제거 (從玩家背包中移除物品)
         ItemStack delete = new ItemStack(itemStack);
         delete.setAmount(tradeAmount);
         player.getInventory().removeItem(delete);
         player.updateInventory();
 
-        // 플레이어 당 거래량 제한 아이템에 대한 처리.
+        // 플레이어 당 거래량 제한 아이템에 대한 처리. (處理每個玩家的交易限制物品)
         if (tradeLimitPerPlayer != Integer.MIN_VALUE)
         {
             UserUtil.OnPlayerTradeLimitedItem(player, shopName, HashUtil.GetItemHash(itemStack), tradeAmount, true);
         }
 
-        // 로그 기록
+        // 로그 기록 (日誌記錄)
         LogUtil.addLog(shopName, itemStack.getType().toString(), -tradeAmount, priceSum, currency, player.getName());
 
         // 메시지 출력
         SendSellMessage(currency, econ, player, tradeAmount, priceSum, itemStack);
 
-        // 플레이어에게 소리 재생
+        // 플레이어에게 소리 재생 (向玩家播放音效)
         SoundUtil.playerSoundEffect(player, "sell");
 
-        // 상점 계좌 잔액 수정
+        // 상점 계좌 잔액 수정 (修改商店帳戶餘額)
         if (data.get().contains("Options.Balance"))
         {
             ShopUtil.addShopBalance(shopName, priceSum * -1);
         }
-        // 상점 재고 증가
+        // 상점 재고 증가 (增加商店庫存)
         if (!infiniteStock)
         {
             data.get().set(tradeIdx + ".stock", MathUtil.SafeAdd(stockOld, tradeAmount));
         }
 
-        // 커맨드 실행
+        // 커맨드 실행 (執行指令)
         RunSellCommand(data, player, shopName, itemStack, tradeAmount, priceSum, calcResult[1]);
 
-        // 더티
+        // 더티 (Dirty)
         ShopUtil.shopDirty.put(shopName, true);
 
-        // 이벤트 호출
+        // 이벤트 호출 (呼叫事件)
         ShopBuySellEvent event = new ShopBuySellEvent(false, priceBuyOld, Calc.getCurrentPrice(shopName, tradeIdx, true), priceSellOld, DynaShopAPI.getSellPrice(shopName, itemStack), stockOld, DynaShopAPI.getStock(shopName, itemStack), DynaShopAPI.getMedian(shopName, itemStack), shopName, itemStack, player);
         Bukkit.getPluginManager().callEvent(event);
         
-        // UI 갱신
+        // UI 갱신 (UI更新)
         DynaShopAPI.openItemTradeGui(player, shopName, tradeIdx);
     }
 

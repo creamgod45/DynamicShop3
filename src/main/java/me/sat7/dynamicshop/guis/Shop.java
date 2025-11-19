@@ -136,21 +136,30 @@ public final class Shop extends InGameUI
         {
             try
             {
-                // 현재 페이지에 해당하는 것들만 출력
+                // 현재 페이지에 해당하는 것들만 출력 (只輸出目前頁面的項目)
                 idx = Integer.parseInt(s);
                 idx -= ((page - 1) * 45);
                 if (!(idx < 45 && idx >= 0)) continue;
 
-                // 아이탬 생성
-                String itemName = shopData.getString(s + ".mat"); // 메테리얼
-                ItemStack itemStack = new ItemStack(Material.getMaterial(itemName), 1); // 아이탬 생성
-                itemStack.setItemMeta((ItemMeta) shopData.get(s + ".itemStack")); // 저장된 메타 적용
+                // 아이탬 생성 (建立物品)
+                String itemName = shopData.getString(s + ".mat"); // 메테리얼 (材料)
+                Material mat = Material.getMaterial(itemName);
+                if(mat == null)
+                {
+                    if (player.hasPermission(P_ADMIN_SHOP_EDIT))
+                        CreateButton(idx, Material.BARRIER, t(player, "SHOP.INCOMPLETE_DATA"), t(null, "SHOP.INCOMPLETE_DATA_Lore") + s);
 
-                // 커스텀 메타 설정
+                    DynamicShop.console.sendMessage(Constants.DYNAMIC_SHOP_PREFIX + "Invalid material '" + itemName + "' in shop '" + shopName + "' at index " + s);
+                    continue;
+                }
+                ItemStack itemStack = new ItemStack(mat, 1); // 아이탬 생성
+                itemStack.setItemMeta((ItemMeta) shopData.get(s + ".itemStack")); // 저장된 메타 적용 (套用已儲存的Meta)
+
+                // 커스텀 메타 설정 (自訂Meta設定)
                 ItemMeta meta = itemStack.getItemMeta();
                 String lore = "";
 
-                // 상품
+                // 상품 (商品)
                 if (shopData.contains(s + ".value"))
                 {
                     int tradeIdx = Integer.parseInt(s);
@@ -345,7 +354,7 @@ public final class Shop extends InGameUI
                         lore += "\n" + t(player, "SHOP.ITEM_EDIT_LORE");
                     }
                 }
-                // 장식용
+                // 장식용 (裝飾用)
                 else
                 {
                     if (player.hasPermission(P_ADMIN_SHOP_EDIT))
@@ -417,7 +426,7 @@ public final class Shop extends InGameUI
             }
         }
 
-        // 권한
+        // 권한 (權限)
         String finalPermText = "";
         String perm = shopData.getString("Options.permission");
         if (perm != null && perm.length() > 0)
@@ -426,12 +435,12 @@ public final class Shop extends InGameUI
             finalPermText += t(player, "SHOP.PERMISSION_ITEM").replace("{permission}", perm) + "\n";
         }
 
-        // 세금
+        // 세금 (稅金)
         String finalTaxText = "";
         finalTaxText += t(player, "TAX.SALES_TAX") + ":" + "\n";
         finalTaxText += t(player, "SHOP.SHOP_INFO_DASH") + Calc.getTaxRate(shopName) + "%" + "\n";
 
-        // 상점 잔액
+        // 상점 잔액 (商店餘額)
         String finalShopBalanceText = "";
 
         if(!shopData.contains("Options.flag.hideshopbalance"))
@@ -456,7 +465,7 @@ public final class Shop extends InGameUI
             }
         }
 
-        // 영업시간
+        // 영업시간 (營業時間)
         String finalShopHourText = "";
         if (shopData.contains("Options.shophours"))
         {
@@ -469,7 +478,7 @@ public final class Shop extends InGameUI
             finalShopHourText += t(player, "SHOP.SHOP_INFO_DASH") + t(player, "TIME.CLOSE") + ": " + close + "\n";
         }
 
-        // 상점 좌표
+        // 상점 좌표 (商店座標)
         String finalShopPosText = "";
         if (shopData.contains("Options.pos1") && shopData.contains("Options.pos2"))
         {
@@ -497,11 +506,11 @@ public final class Shop extends InGameUI
         if(ChatColor.stripColor(temp).startsWith("\n"))
             shopLore = shopLore.replaceFirst("\n","");
 
-        // 어드민이면----------
+        // 어드민이면---------- (如果是管理員----------)
         if (player.hasPermission(P_ADMIN_SHOP_EDIT))
             shopLore += "\n";
 
-        // 플래그
+        // 플래그 (旗標)
         StringBuilder finalFlagText = new StringBuilder();
         if (player.hasPermission(P_ADMIN_SHOP_EDIT))
         {
@@ -527,7 +536,7 @@ public final class Shop extends InGameUI
 
     private void CloseUI()
     {
-        // 표지판으로 접근한 경우에는 그냥 창을 닫음
+        // 표지판으로 접근한 경우에는 그냥 창을 닫음 (透過招牌進入時直接關閉視窗)
         if (UserUtil.userTempData.get(player.getUniqueId()).equalsIgnoreCase("sign"))
         {
             UserUtil.userTempData.put(player.getUniqueId(), "");
@@ -603,13 +612,13 @@ public final class Shop extends InGameUI
                 return;
             }
 
-            // 거래화면 열기
+            // 거래화면 열기 (開啟交易畫面)
             if (e.isLeftClick() && shopData.contains(idx + ".value"))
             {
                 SoundUtil.playerSoundEffect(player, "tradeview");
                 DynaShopAPI.openItemTradeGui(player, shopName, String.valueOf(idx));
             }
-            // 아이탬 이동, 수정, 또는 장식탬 삭제
+            // 아이탬 이동, 수정, 또는 장식탬 삭제 (移動、修改物品或刪除裝飾品)
             else if (e.isRightClick() && player.hasPermission(P_ADMIN_SHOP_EDIT))
             {
                 if (e.isShiftClick())
@@ -656,7 +665,7 @@ public final class Shop extends InGameUI
         }
         else if (player.hasPermission(P_ADMIN_SHOP_EDIT))
         {
-            // 아이탬 이동. 또는 장식 복사
+            // 아이탬 이동. 또는 장식 복사 (移動物品或複製裝飾)
             if (e.isRightClick() && selectedSlot != -1)
             {
                 shopData.set(String.valueOf(idx), shopData.get(String.valueOf(selectedSlot)));
@@ -673,7 +682,7 @@ public final class Shop extends InGameUI
                 selectedSlot = -1;
                 RefreshUI();
             }
-            // 팔렛트 열기
+            // 팔렛트 열기 (開啟調色盤)
             else
             {
                 DynaShopAPI.openItemPalette(player, 0, shopName, idx, 1, "");

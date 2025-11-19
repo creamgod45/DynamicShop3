@@ -1,8 +1,6 @@
 package me.sat7.dynamicshop.guis;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.*;
 
 import me.sat7.dynamicshop.DynaShopAPI;
 import me.sat7.dynamicshop.events.OnChat;
@@ -29,6 +27,7 @@ import static me.sat7.dynamicshop.utilities.MathUtil.Clamp;
 
 public final class ItemPalette extends InGameUI
 {
+
     public ItemPalette()
     {
         uiType = UI_TYPE.ItemPalette;
@@ -44,6 +43,7 @@ public final class ItemPalette extends InGameUI
     private static ArrayList<ItemStack> sortedList = new ArrayList<>();
     private ArrayList<ItemStack> paletteList = new ArrayList<>();
 
+    private Map<UUID, Integer> lastPage = new HashMap<>();
     private Player player;
     private String shopName = "";
     private int shopSlotIndex = 0;
@@ -392,6 +392,10 @@ public final class ItemPalette extends InGameUI
             return;
 
         DynaShopAPI.openItemPalette(player, uiSubType, shopName, shopSlotIndex, targetPage, this.search);
+
+        if(uiType == UI_TYPE.Shop) {
+            lastPage.put(player.getUniqueId(), currentPage);
+        }
     }
 
     private void AddAll(boolean applyRecommend)
@@ -404,7 +408,7 @@ public final class ItemPalette extends InGameUI
         {
             if (inventory.getItem(i) != null)
             {
-                ItemStack original = inventory.getItem(i); // UI 요소가 추가된 상태임.
+                ItemStack original = inventory.getItem(i); // UI 요소가 추가된 상태임. (UI元素已新增的狀態)
                 if (original == null || original.getType() == Material.AIR)
                     continue;
 
@@ -431,6 +435,7 @@ public final class ItemPalette extends InGameUI
                     if (worth != 0)
                     {
                         median = ShopUtil.CalcRecommendedMedian(worth, ConfigUtil.GetNumberOfPlayer());
+                        worth = 1;
                     } else
                     {
                         if (player != null)
@@ -442,7 +447,7 @@ public final class ItemPalette extends InGameUI
                 ShopUtil.addItemToShop(shopName, targetSlotIdx, temp);
             }
         }
-        DynaShopAPI.openShopGui(player, shopName, 1);
+        DynaShopAPI.openShopGui(player, shopName, lastPage.getOrDefault(player.getUniqueId(), 1));
     }
 
     private void OnClickSearch(boolean isLeft, boolean isRight)
@@ -467,7 +472,7 @@ public final class ItemPalette extends InGameUI
         if (item == null || item.getType() == Material.AIR)
             return;
 
-        // 인자로 들어오는 item은 UI요소임
+        // 인자로 들어오는 item은 UI요소임 (作為參數傳入的item是UI元素)
         ItemStack itemStack = CreateItemStackWithRef(item);
 
         if(uiSubType == 0)

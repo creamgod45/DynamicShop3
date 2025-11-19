@@ -72,19 +72,19 @@ public class Account extends DSCMD
                 }
                 break;
             case "linkto":
-                // 그런 상점(타깃) 없음
+                // 그런 상점(타깃) 없음 (沒有這樣的商店(目標))
                 if (!ShopUtil.shopConfigFiles.containsKey(args[4]))
                 {
                     sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.SHOP_NOT_FOUND"));
                     return;
                 }
 
-                // 타깃 상점이 연동계좌임
+                // 타깃 상점이 연동계좌임 (目標商店是連結帳戶)
                 if (targetShopData.get().contains("Options.Balance"))
                 {
                     try
                     {
-                        // temp 를 직접 사용하지는 않지만 의도적으로 넣은 코드임. 숫자가 아니면 건너뛰기 위함.
+                        // temp 를 직접 사용하지는 않지만 의도적으로 넣은 코드임. 숫자가 아니면 건너뛰기 위함. (雖然沒有直接使用temp，但這是刻意加入的程式碼。目的是為了跳過非數字的情況。)
                         Double temp = Double.parseDouble(targetShopData.get().getString("Options.Balance"));
                     } catch (Exception e)
                     {
@@ -93,7 +93,7 @@ public class Account extends DSCMD
                     }
                 }
 
-                // 출발상점을 타깃으로 하는 상점이 있음
+                // 출발상점을 타깃으로 하는 상점이 있음 (有以出發商店為目標的商店)
                 for (CustomConfig tempShopData : ShopUtil.shopConfigFiles.values())
                 {
                     String temp = tempShopData.get().getString("Options.Balance");
@@ -110,14 +110,14 @@ public class Account extends DSCMD
                     }
                 }
 
-                // 출발 상점과 도착 상점이 같음
+                // 출발 상점과 도착 상점이 같음 (出發商店和到達商店相同)
                 if (args[1].equals(args[4]))
                 {
                     sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.WRONG_USAGE"));
                     return;
                 }
 
-                // 출발 상점과 도착 상점의 통화 유형이 다름
+                // 출발 상점과 도착 상점의 통화 유형이 다름 (出發商店和到達商店的貨幣類型不同)
                 if (!ShopUtil.GetCurrency(shopData).equals(ShopUtil.GetCurrency(targetShopData)))
                 {
                     sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.SHOP_DIFF_CURRENCY"));
@@ -129,7 +129,7 @@ public class Account extends DSCMD
                 sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "MESSAGE.CHANGES_APPLIED") + args[4]);
                 break;
             case "transfer":
-                //[4] 대상 [5] 금액
+                //[4] 대상 [5] 금액 ([4] 對象 [5] 金額)
                 if (args.length < 6)
                 {
                     sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.WRONG_USAGE"));
@@ -137,7 +137,7 @@ public class Account extends DSCMD
                 }
 
                 double amount;
-                // 마지막 인자가 숫자가 아님
+                // 마지막 인자가 숫자가 아님 (最後一個參數不是數字)
                 try
                 {
                     amount = Double.parseDouble(args[5]);
@@ -147,14 +147,14 @@ public class Account extends DSCMD
                     return;
                 }
 
-                // 출발 상점이 무한계좌임
+                // 출발 상점이 무한계좌임 (出發商店是無限帳戶)
                 if (!shopData.get().contains("Options.Balance"))
                 {
                     sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.SHOP_HAS_INF_BAL").replace("{shop}", args[1]));
                     return;
                 }
 
-                // 출발 상점에 돈이 부족
+                // 출발 상점에 돈이 부족 (出發商店金額不足)
                 if (ShopUtil.getShopBalance(args[1]) < amount)
                 {
                     if (ShopUtil.GetCurrency(shopData).equalsIgnoreCase(Constants.S_JOBPOINT))
@@ -180,31 +180,31 @@ public class Account extends DSCMD
                     return;
                 }
 
-                // 다른 상점으로 송금
+                // 다른 상점으로 송금 (匯款到其他商店)
                 if (ShopUtil.shopConfigFiles.containsKey(args[4]))
                 {
-                    // 도착 상점이 무한계좌임
+                    // 도착 상점이 무한계좌임 (到達商店是無限帳戶)
                     if (!targetShopData.get().contains("Options.Balance"))
                     {
                         sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.SHOP_HAS_INF_BAL").replace("{shop}", args[4]));
                         return;
                     }
 
-                    // 출발 상점과 도착 상점이 같음
+                    // 출발 상점과 도착 상점이 같음 (出發商店和到達商店相同)
                     if (args[1].equals(args[4]))
                     {
                         sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.WRONG_USAGE"));
                         return;
                     }
 
-                    // 출발 상점과 도착 상점의 통화 유형이 다름
+                    // 출발 상점과 도착 상점의 통화 유형이 다름 (出發商店和到達商店的貨幣類型不同)
                     if (!ShopUtil.GetCurrency(shopData).equals(ShopUtil.GetCurrency(targetShopData)))
                     {
                         sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "ERR.SHOP_DIFF_CURRENCY"));
                         return;
                     }
 
-                    // 송금.
+                    // 송금. (匯款.)
                     ShopUtil.addShopBalance(args[1], amount * -1);
                     ShopUtil.addShopBalance(args[4], amount);
 
@@ -213,7 +213,7 @@ public class Account extends DSCMD
 
                     sender.sendMessage(DynamicShop.dsPrefix(sender) + t(sender, "MESSAGE.TRANSFER_SUCCESS"));
                 }
-                // 플레이어에게 송금
+                // 플레이어에게 송금 (匯款給玩家)
                 else
                 {
                     try

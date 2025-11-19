@@ -33,3 +33,4 @@ Log.LogCullTimeMinutes: 120
 ShopYmlBackup.Enable: true
 ShopYmlBackup.IntervalMinutes: 60
 ShopYmlBackup.CullAgeMinutes: 300
+DebugMode: false

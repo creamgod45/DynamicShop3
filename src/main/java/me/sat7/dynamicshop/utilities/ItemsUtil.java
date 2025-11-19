@@ -18,7 +18,7 @@ public final class ItemsUtil
 
     }
 
-    // 지정된 이름,lore,수량의 아이탬 스택 생성및 반환
+    // 지정된 이름,lore,수량의 아이탬 스택 생성및 반환 (建立並傳回具有指定名稱、lore和數量的物品堆疊)
     public static ItemStack createItemStack(Material material, ItemMeta _meta, String name, ArrayList<String> lore, int amount)
     {
         ItemStack istack = new ItemStack(material, amount);
@@ -31,7 +31,7 @@ public final class ItemsUtil
         return istack;
     }
 
-    // 아이탬 이름 정돈
+    // 아이탬 이름 정돈 (整理物品名稱)
     public static String getBeautifiedName(Material mat)
     {
         return getBeautifiedName(mat.toString());
@@ -53,7 +53,7 @@ public final class ItemsUtil
         return finalStr.toString();
     }
 
-    // 아이탬 정보 출력
+    // 아이탬 정보 출력 (輸出物品資訊)
     public static void sendItemInfo(CommandSender sender, String shopName, int idx, String msgType)
     {
         if(sender instanceof Player)

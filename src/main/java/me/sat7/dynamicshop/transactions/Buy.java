@@ -58,7 +58,7 @@ public final class Buy
             playerBalance = econ.getBalance(player);
         }
 
-            // 플레이어 당 거래량 제한 확인
+            // 플레이어 당 거래량 제한 확인 (確認每個玩家的交易限制)
         int tradeIdxInt = Integer.parseInt(tradeIdx);
         int tradeLimitPerPlayer = ShopUtil.GetBuyLimitPerPlayer(shopName, tradeIdxInt);
         int playerTradingVolume = UserUtil.GetPlayerTradingVolume(player, shopName, HashUtil.GetItemHash(itemStack));
@@ -92,7 +92,7 @@ public final class Buy
             tradeAmount++;
         }
 
-        // 실 구매 가능량이 0이다 = 돈이 없다.
+        // 실 구매 가능량이 0이다 = 돈이 없다. (實際可購買量為0 = 沒有錢)
         if (tradeAmount <= 0)
         {
             String message = "";
@@ -118,7 +118,7 @@ public final class Buy
             return;
         }
 
-        // 상점 재고 부족
+        // 상점 재고 부족 (商店庫存不足)
         if (!infiniteStock && stockOld <= tradeAmount)
         {
             player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "MESSAGE.OUT_OF_STOCK"));
@@ -180,34 +180,34 @@ public final class Buy
             leftAmount -= giveAmount;
         }
 
-        // 플레이어 당 거래량 제한 아이템에 대한 처리.
+        // 플레이어 당 거래량 제한 아이템에 대한 처리. (處理每個玩家的交易限制物品)
         if (tradeLimitPerPlayer < Integer.MAX_VALUE)
         {
             UserUtil.OnPlayerTradeLimitedItem(player, shopName, HashUtil.GetItemHash(itemStack), tradeAmount, false);
         }
 
-        //로그 기록
+        //로그 기록 (日誌記錄)
         LogUtil.addLog(shopName, itemStack.getType().toString(), tradeAmount, priceSum, currency, player.getName());
 
-        // 메시지 출력
+        // 메시지 출력 (輸出訊息)
         SendBuyMessage(currency, econ, player, tradeAmount, priceSum, itemStack);
 
-        // 플레이어에게 소리 재생
+        // 플레이어에게 소리 재생 (向玩家播放音效)
         SoundUtil.playerSoundEffect(player, "buy");
 
-        // 상점 계좌 잔액 수정
+        // 상점 계좌 잔액 수정 (修改商店帳戶餘額)
         if (data.get().contains("Options.Balance"))
         {
             ShopUtil.addShopBalance(shopName, priceSum);
         }
 
-        // 커맨드 실행
+        // 커맨드 실행 (執行指令)
         RunBuyCommand(data, player, shopName, itemStack, tradeAmount, priceSum);
 
         ShopUtil.shopDirty.put(shopName, true);
         DynaShopAPI.openItemTradeGui(player, shopName, tradeIdx);
 
-        // 이벤트 호출
+        // 이벤트 호출 (呼叫事件)
         ShopBuySellEvent event = new ShopBuySellEvent(true, priceBuyOld, Calc.getCurrentPrice(shopName, tradeIdx, true), priceSellOld, DynaShopAPI.getSellPrice(shopName, itemStack), stockOld, DynaShopAPI.getStock(shopName, itemStack), DynaShopAPI.getMedian(shopName, itemStack), shopName, itemStack, player);
         Bukkit.getPluginManager().callEvent(event);
     }

@@ -1,4 +1,4 @@
-Supported Minecraft versions: 1.16.5 ~ 1.21
+Supported Minecraft versions: 1.16.5 ~ 1.21.10
 
 Free version https://www.spigotmc.org/resources/65603/
 

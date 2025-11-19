@@ -56,17 +56,17 @@ public final class PageEditor extends InGameUI
         {
             try
             {
-                // 현재 페이지에 해당하는 것들만 출력
+                // 현재 페이지에 해당하는 것들만 출력 (只輸出目前頁面的項目)
                 int idx = Integer.parseInt(s);
                 idx -= ((page - 1) * 45);
                 if (!(idx < 45 && idx >= 0)) continue;
 
-                // 아이탬 생성
-                String itemName = data.get().getString(s + ".mat"); // 메테리얼
+        // 아이탬 생성 (建立物品)
+                String itemName = data.get().getString(s + ".mat"); // 메테리얼 (材料)
                 ItemStack itemStack = new ItemStack(Material.getMaterial(itemName), 1); // 아이탬 생성
-                itemStack.setItemMeta((ItemMeta) data.get().get(s + ".itemStack")); // 저장된 메타 적용
+                itemStack.setItemMeta((ItemMeta) data.get().get(s + ".itemStack")); // 저장된 메타 적용 (套用已儲存的Meta)
 
-                // 커스텀 메타 설정
+                // 커스텀 메타 설정 (自訂Meta設定)
                 ItemMeta meta = itemStack.getItemMeta();
                 meta.setDisplayName("§8#" + s);
                 ArrayList<String> loreList = new ArrayList<>();
@@ -116,7 +116,7 @@ public final class PageEditor extends InGameUI
 
         int pageButtonCount = PAGE_BUTTON_END - PAGE_BUTTON_START + 1;
 
-        // 닫기 버튼
+        // 닫기 버튼 (關閉按鈕)
         if (e.getSlot() == CLOSE)
         {
             DynaShopAPI.openShopGui(player, shopName, page);
@@ -286,7 +286,7 @@ public final class PageEditor extends InGameUI
             {
                 ShopUtil.closeInventoryWithDelay(player);
 
-                UserUtil.userInteractItem.put(player.getUniqueId(), shopName + "/" + page); // 삭제 확인을 위해 필요.
+                UserUtil.userInteractItem.put(player.getUniqueId(), shopName + "/" + page); // 삭제 확인을 위해 필요. (刪除確認時需要。)
                 UserUtil.userTempData.put(player.getUniqueId(), "waitforPageDelete");
                 OnChat.WaitForInput(player);
 

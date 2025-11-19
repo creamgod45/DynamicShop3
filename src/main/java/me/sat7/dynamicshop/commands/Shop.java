@@ -53,7 +53,7 @@ public final class Shop
 
         String shopName = GetShopName(args);
 
-        // 그런 이름을 가진 상점이 있는지 확인
+        // 그런 이름을 가진 상점이 있는지 확인 (檢查是否存在具有該名稱的商店)
         if (player != null && !ShopUtil.shopConfigFiles.containsKey(shopName))
         {
             player.sendMessage(DynamicShop.dsPrefix(player) + t(player, "ERR.SHOP_NOT_FOUND"));
@@ -62,10 +62,10 @@ public final class Shop
 
         CustomConfig shopData = ShopUtil.shopConfigFiles.get(shopName);
 
-        // 상점 UI 열기
+        // 상점 UI 열기 (開啟商店UI)
         if (player != null && args.length <= 2)
         {
-            //권한 확인
+            //권한 확인 (權限確認)
             String s = shopData.get().getString("Options.permission");
             if (s != null && s.length() > 0)
             {
@@ -76,7 +76,7 @@ public final class Shop
                 }
             }
 
-            // 플래그 확인
+            // 플래그 확인 (旗標確認)
             ConfigurationSection shopConf = shopData.get().getConfigurationSection("Options");
             if (shopConf.contains("flag.signshop"))
             {
@@ -123,7 +123,7 @@ public final class Shop
 
             DynaShopAPI.openShopGui(player, shopName, 1);
         }
-        // 그외 각종 상점관련 명령어
+        // 그외 각종 상점관련 명령어 (其他各種商店相關指令)
         else if (args.length >= 3)
         {
             CMDManager.RunCMD(args[2].toLowerCase(), args, sender);

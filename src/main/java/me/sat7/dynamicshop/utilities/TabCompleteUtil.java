@@ -211,7 +211,7 @@ public final class TabCompleteUtil
                                     {
                                         int i = Integer.parseInt(s);
                                         if (!data.get().contains(s + ".value"))
-                                            continue; // 장식용임
+                                            continue; // 장식용임 (裝飾用)
                                         temp.add(s + "/" + data.get().getString(s + ".mat"));
                                     } catch (Exception ignored)
                                     {
@@ -574,11 +574,14 @@ public final class TabCompleteUtil
                 } else if (args[0].equalsIgnoreCase("deleteOldUser"))
                 {
                     Help.showHelp("delete_old_user", (Player) sender, args);
+                } else {
+                    Help.showHelp("main", (Player) sender, args);
                 }
 
                 return autoCompleteList;
             }
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             return null;
         }

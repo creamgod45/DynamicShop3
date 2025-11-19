@@ -25,9 +25,9 @@ public final class Constants
     public static final String P_ADMIN_ITEM_INFO = "dshop.admin.iteminfo";
 
     // Permission_User
-    public static final String P_USE = "dshop.use"; // 이 권한은 기본적으로 지급됨
-    public static final String P_SELL = "dshop.sell"; // 이 권한은 기본적으로 지급됨
-    public static final String P_USE_QSELL = "dshop.use.qsell"; // 이 권한은 기본적으로 지급됨
+    public static final String P_USE = "dshop.use"; // 이 권한은 기본적으로 지급됨 (此權限預設授予)
+    public static final String P_SELL = "dshop.sell"; // 이 권한은 기본적으로 지급됨 (此權限預設授予)
+    public static final String P_USE_QSELL = "dshop.use.qsell"; // 이 권한은 기본적으로 지급됨 (此權限預設授予)
 
     // Currency
     public static final String S_VAULT = "Vault";

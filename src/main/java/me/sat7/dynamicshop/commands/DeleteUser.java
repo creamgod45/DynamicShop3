@@ -62,7 +62,7 @@ public final class DeleteUser extends DSCMD
             if (lastJoinLong == 0)
                 continue;
 
-            // 마지막으로 접속한지 입력한 일보다 더 지남.
+            // 마지막으로 접속한지 입력한 일보다 더 지남. (最後上線時間已超過輸入的天數)
             long dayPassed = currentTime - lastJoinLong;
             if (dayPassed > target)
             {
